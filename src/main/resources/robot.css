@@ -1,0 +1,46 @@
+.field-container {
+    position: relative;
+}
+
+.field {
+}
+
+.field td {
+    border: 1px solid #CCC;
+}
+
+.figures {
+}
+
+.figures > div {
+    position: absolute;
+}
+
+.figure-wrapper > div {
+    background-color: gray;
+    position: absolute;
+}
+
+.figure-walle {
+    text-align: center;
+}
+
+.figure-block {
+    text-align: center;
+}
+
+.field td.border-top {
+    border-top: 1px solid black;
+}
+
+.field td.border-right {
+    border-right: 1px solid black;
+}
+
+.field td.border-bottom {
+    border-bottom: 1px solid black;
+}
+
+.field td.border-left {
+    border-left: 1px solid black;
+}
