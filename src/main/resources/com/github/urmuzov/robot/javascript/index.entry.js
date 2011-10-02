@@ -29,18 +29,22 @@ function onLoad() {
 
     var logger = goog.debug.Logger.getLogger('');
 
-
     try {
-        var stack = new robot.figures.StackableFigure(field, new c(0, 2), 2);
-        var wallE = new robot.figures.WallE(field, new c(0, 0), robot.Direction.DOWN);
+        var stack = new robot.figures.StackableFigure(new c(0, 2), 2);
+        var wallE = new robot.figures.WallE(new c(0, 0), robot.Direction.DOWN);
+        var fig = new robot.figures.Figure(new c(5, 5), robot.Direction.DOWN);
+        stack.setField(field);
+        field.addFigure(wallE);
         wallE.move();
         wallE.move();
         wallE.move();
         wallE.turnLeft();
         stack.setCount(7);
         wallE.move();
-        var fig = new robot.figures.Figure(field, new c(5, 5), robot.Direction.DOWN);
+        stack.setField(null);
+        fig.setField(field);
         wallE.turnLeft();
+        field.removeFigure(fig);
         wallE.move();
         wallE.turnRight();
         wallE.move();

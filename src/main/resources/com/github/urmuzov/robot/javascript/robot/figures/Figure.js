@@ -12,19 +12,18 @@ goog.require('robot.events.FigureRotatedEvent');
  * @class
  * @constructor
  * @extends goog.events.EventTarget
- * @param {!robot.Field} field поле, которому принадлежит фигура
  * @param {!goog.math.Coordinate} coordinate начальная позиция
  * @param {!robot.Direction} direction начальное направление
  */
-robot.figures.Figure = function(field, coordinate, direction) {
+robot.figures.Figure = function(coordinate, direction) {
     goog.events.EventTarget.call(this);
     this.setParentEventTarget(field);
 
     /**
      * @private
-     * @type !robot.Field
+     * @type robot.Field
      */
-    this.field_ = field;
+    this.field_ = null;
     /**
      * @private
      * @type !goog.math.Coordinate
@@ -36,10 +35,6 @@ robot.figures.Figure = function(field, coordinate, direction) {
      */
     this.direction_ = direction;
 
-    this.field_.addFigure(this);
-    var ev = new robot.events.FigureEvent(robot.events.FigureEventType.ADDED, this, this.getSnapshot(), this.getSnapshot());
-    this.dispatchEvent(ev);
-    this.logger_.info("added " + ev.toString());
 };
 goog.inherits(robot.figures.Figure, goog.events.EventTarget);
 
@@ -51,10 +46,23 @@ robot.figures.Figure.prototype.logger_ = goog.debug.Logger.getLogger('robot.figu
 
 /**
  * Получение поля, которому принадлежит эта фигура
- * @return {!robot.Field}
+ * @return {robot.Field}
  */
 robot.figures.Figure.prototype.getField = function() {
     return this.field_;
+};
+
+/**
+ * Получение поля, которому принадлежит эта фигура
+ * @param {robot.Field} field
+ */
+robot.figures.Figure.prototype.setField = function(field) {
+    if (goog.isNull(field)) {
+        this.field_.removeFigure(this);
+    } else {
+        field.addFigure(this);
+    }
+    this.field_ = field;
 };
 
 /**
@@ -143,7 +151,6 @@ robot.figures.Figure.prototype.update = function() {
  */
 robot.figures.Figure.prototype.updateInternal_ = function() {
 };
-
 
 /**
  * @override

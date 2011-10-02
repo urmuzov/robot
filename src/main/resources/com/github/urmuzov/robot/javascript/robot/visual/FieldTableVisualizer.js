@@ -75,7 +75,8 @@ robot.visual.FieldTableVisualizer = function(field) {
             robot.events.FigureEventType.MOVED,
             robot.events.FigureEventType.ROTATED,
             robot.events.FigureEventType.CRUSHED,
-            robot.events.FigureEventType.UPDATED
+            robot.events.FigureEventType.UPDATED,
+            robot.events.FigureEventType.REMOVED
         ],
         this.figureEventQueuePush_,
         false,

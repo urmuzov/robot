@@ -5,9 +5,10 @@ goog.provide('robot.events.FigureEventType');
  * @enum {string}
  */
 robot.events.FigureEventType = {
+    ADDED: 'added',
     MOVED: 'moved',
     CRUSHED: 'crushed',
-    ADDED: 'added',
     ROTATED: 'rotated',
-    UPDATED: 'updated'
+    UPDATED: 'updated',
+    REMOVED: 'removed'
 };

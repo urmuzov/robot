@@ -91,6 +91,8 @@ robot.visual.FigureVisualizer.prototype.attachAnimation = function(animationQueu
         this.attachCrushedAnimation(animationQueue, animationTime, figureEvent);
     } else if (eventType == robot.events.FigureEventType.UPDATED) {
         this.attachUpdatedAnimation(animationQueue, animationTime, figureEvent);
+    } else if (eventType == robot.events.FigureEventType.REMOVED) {
+        this.attachRemovedAnimation(animationQueue, animationTime, figureEvent);
     } else {
         throw new Error("FieldTableVisualizer can't process event type '" + eventType + "'");
     }
@@ -184,6 +186,29 @@ robot.visual.FigureVisualizer.prototype.attachUpdatedAnimation = function(animat
 
 
     this.logger_.info("Animation Update");
+};
+
+/**
+ * @param {!goog.fx.AnimationQueue} animationQueue
+ * @param {number} animationTime
+ * @param {!robot.events.FigureEvent} figureEvent
+ */
+robot.visual.FigureVisualizer.prototype.attachRemovedAnimation = function(animationQueue, animationTime, figureEvent) {
+    var oldFigureEl = this.figureElsByDirection_[figureEvent.snapshotBefore.direction];
+
+    var fadeOut = new goog.fx.dom.Fade(oldFigureEl, 1, 0, animationTime);
+    animationQueue.add(fadeOut);
+
+    fadeOut.addEventListener(goog.fx.Transition.EventType.END, function() {
+        var directionEls = goog.object.getValues(this.figureElsByDirection_);
+        for (var i = 0; i < directionEls.length; i++) {
+            goog.dom.removeNode(directionEls[i]);
+        }
+        this.figureElsByDirection_ = {};
+    }, false, this);
+
+
+    this.logger_.info("Animation Removed");
 };
 
 /**

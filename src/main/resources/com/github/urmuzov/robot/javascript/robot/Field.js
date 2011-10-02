@@ -230,8 +230,34 @@ robot.Field.prototype.isWallOn = function(direction, coordinate) {
  * @param {robot.figures.Figure} figure
  */
 robot.Field.prototype.addFigure = function(figure) {
+    if (goog.array.indexOf(this.figures_, figure) != -1) {
+        return;
+    }
     this.figures_.push(figure);
+    figure.setField(this);
+    var ev = new robot.events.FigureEvent(robot.events.FigureEventType.ADDED, figure, figure.getSnapshot(), figure.getSnapshot());
+    this.dispatchEvent(ev);
+    this.logger_.info("added " + ev.toString());
+
 };
+
+/**
+ * Удаление фигуры с поля
+ * @param {robot.figures.Figure} figure
+ */
+robot.Field.prototype.removeFigure = function(figure) {
+    if (goog.array.indexOf(this.figures_, figure) == -1) {
+        return;
+    }
+    goog.array.remove(this.figures_, figure);
+    figure.setField(null);
+    this.field_ = null;
+    var ev = new robot.events.FigureEvent(robot.events.FigureEventType.REMOVED, figure, figure.getSnapshot(), figure.getSnapshot());
+    this.dispatchEvent(ev);
+    this.logger_.info("removed " + ev.toString());
+};
+
+
 
 /**
  * Добавляет фигуру на поле

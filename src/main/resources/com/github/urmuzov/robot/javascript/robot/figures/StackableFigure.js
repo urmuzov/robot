@@ -7,18 +7,17 @@ goog.require('robot.figures.StackableFigureSnapshot');
  * @class
  * @constructor
  * @extends robot.figures.Figure
- * @param {!robot.Field} field поле, которому принадлежит фигура
  * @param {!goog.math.Coordinate} coordinate начальная позиция
  * @param {number=} opt_count количество блоков в ячейке
  */
-robot.figures.StackableFigure = function(field, coordinate, opt_count) {
+robot.figures.StackableFigure = function(coordinate, opt_count) {
     /**
      * @private
      * @type number
      */
     this.count_ = goog.isDef(opt_count) ? opt_count : 1;
 
-    robot.figures.Figure.call(this, field, coordinate, robot.Direction.DOWN);
+    robot.figures.Figure.call(this, coordinate, robot.Direction.DOWN);
 };
 goog.inherits(robot.figures.StackableFigure, robot.figures.Figure);
 
