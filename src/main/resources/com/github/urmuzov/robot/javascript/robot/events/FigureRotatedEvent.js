@@ -1,5 +1,7 @@
 goog.provide('robot.events.FigureRotatedEvent');
 
+goog.require('robot.events.FigureEvent');
+
 /**
  * @class
  * @constructor
@@ -18,6 +20,14 @@ robot.events.FigureRotatedEvent = function(figure, snapshotBefore, snapshotAfter
     this.rotation = rotation;
 };
 goog.inherits(robot.events.FigureRotatedEvent, robot.events.FigureEvent);
+
+/**
+ * @inheritDoc
+ */
+robot.events.FigureRotatedEvent.prototype.disposeInternal = function() {
+    delete this.rotation;
+    robot.events.FigureRotatedEvent.superClass_.disposeInternal.call(this);
+};
 
 /**
  * @return {string}

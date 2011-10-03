@@ -32,6 +32,17 @@ robot.events.FigureEvent = function(type, figure, snapshotBefore, snapshotAfter)
 goog.inherits(robot.events.FigureEvent, goog.events.Event);
 
 /**
+ * @inheritDoc
+ */
+robot.events.FigureEvent.prototype.disposeInternal = function() {
+    delete this.figure;
+    delete this.snapshotAfter;
+    delete this.snapshotBefore;
+    robot.events.FigureEvent.superClass_.disposeInternal.call(this);
+};
+
+
+/**
  * @return {string}
  */
 robot.events.FigureEvent.prototype.toString = function() {

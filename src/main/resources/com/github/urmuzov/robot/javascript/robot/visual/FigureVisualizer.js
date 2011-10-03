@@ -1,6 +1,7 @@
 goog.provide('robot.visual.FigureVisualizer');
 
 goog.require('robot.events.FigureEventType');
+goog.require('goog.events.Event');
 
 /**
  * @class
@@ -84,7 +85,7 @@ robot.visual.FigureVisualizer.prototype.attachAnimation = function(animationQueu
         this.attachMovedAnimation(animationQueue, animationTime, figureEvent);
     } else if (eventType == robot.events.FigureEventType.ROTATED) {
         if (!(figureEvent instanceof robot.events.FigureRotatedEvent)) {
-            throw new Error('FieldTableVisualizer can need instance of robot.events.FigureRotatedEvent for rotation');
+            throw new Error('FigureVisualizer need instance of robot.events.FigureRotatedEvent for rotation');
         }
         this.attachRotatedAnimation(animationQueue, animationTime, (/** @type !robot.events.FigureRotatedEvent */figureEvent));
     } else if (eventType == robot.events.FigureEventType.CRUSHED) {
