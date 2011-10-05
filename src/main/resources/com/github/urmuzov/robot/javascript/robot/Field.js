@@ -6,6 +6,7 @@ goog.require('robot.Direction');
 goog.require('robot.events.FigureEvent');
 goog.require('robot.events.FigureMovedEvent');
 goog.require('robot.events.FigureRotatedEvent');
+goog.require('robot.figures.Figure');
 goog.require('goog.events.EventTarget');
 goog.require('goog.debug.Logger');
 

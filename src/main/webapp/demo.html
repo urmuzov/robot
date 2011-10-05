@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>${artifactId}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="target/demo.css" rel="stylesheet"/>
+        <script src="target/demo.js"></script>
+        <script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="ace/theme-twilight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="ace/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
+        ${demo.entry.js}
+    </head>
+    <body onload="onLoad();">
+        Конфигурация поля: <select id="field-select"></select> Алгоритм: <select id="algorithm-select"></select>
+        <div style="clear: both;"></div>
+        <div id="output" style="float: left; width: 450px; height: 450px; background-color: #EEE;"></div>
+        <div id="editor" style="position: relative; width: 550px; height: 450px;">
+window.onload = function() {
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/twilight");
+    var JavaScriptMode = require("ace/mode/javascript").Mode;
+    editor.getSession().setMode(new JavaScriptMode());
+};
+        </div>
+        <div id="debug" style="width: 1000px; height: 300px; font-size: 70%; overflow-y: scroll;"></div>
+    </body>
+</html>

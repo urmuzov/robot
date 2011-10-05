@@ -3,7 +3,10 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.isdc.ro/wro wro.xsd">
 
-    <group name="all">
+    <group name="index">
+        <css minimize="false">classpath:robot.css</css>
+    </group>
+    <group name="demo">
         <css minimize="false">classpath:robot.css</css>
     </group>
 

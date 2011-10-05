@@ -1,6 +1,8 @@
 goog.provide('robot.figures.Figure');
 
 goog.require('goog.events.EventTarget');
+goog.require('robot');
+goog.require('robot.Rotation');
 goog.require('robot.figures.FigureSnapshot');
 goog.require('robot.events.FigureEvent');
 goog.require('robot.events.FigureEventType');
@@ -17,7 +19,6 @@ goog.require('robot.events.FigureRotatedEvent');
  */
 robot.figures.Figure = function(coordinate, direction) {
     goog.events.EventTarget.call(this);
-    this.setParentEventTarget(field);
 
     /**
      * @private
@@ -59,8 +60,10 @@ robot.figures.Figure.prototype.getField = function() {
 robot.figures.Figure.prototype.setField = function(field) {
     if (goog.isNull(field)) {
         this.field_.removeFigure(this);
+        this.setParentEventTarget(null);
     } else {
         field.addFigure(this);
+        this.setParentEventTarget(field);
     }
     this.field_ = field;
 };
