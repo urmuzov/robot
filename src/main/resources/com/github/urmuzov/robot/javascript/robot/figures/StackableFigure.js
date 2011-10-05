@@ -1,6 +1,7 @@
 goog.provide('robot.figures.StackableFigure');
 
 goog.require('robot.Direction');
+goog.require('robot.figures.Figure');
 goog.require('robot.figures.StackableFigureSnapshot');
 
 /**

@@ -57,3 +57,13 @@ ace.AceSession = function(){};
  * @param {Object} mode
  */
 ace.AceSession.prototype.setMode = function(mode) {};
+
+/**
+ * @param {string} value
+ */
+ace.AceSession.prototype.setValue = function(value) {};
+
+/**
+ * @return {string}
+ */
+ace.AceSession.prototype.getValue = function() {};

@@ -1,5 +1,7 @@
 goog.provide('robot.events.FigureMovedEvent');
 
+goog.require('robot.events.FigureEvent');
+
 /**
  * @class
  * @constructor

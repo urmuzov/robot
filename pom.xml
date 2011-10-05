@@ -16,7 +16,7 @@
                 Входная точка в приложение относительно ${input.closurePackage}/javascript или ${basedir}/src/main/webapp/
                 Включен ли вывод отладочной информации
         -->
-        <passes>demo</passes>
+        <passes>index demo</passes>
         <input.closurePackage>com.github.urmuzov.robot</input.closurePackage>
         <input.debug.maven>false</input.debug.maven>
         <input.debug.javascript>false</input.debug.javascript>
@@ -590,17 +590,17 @@ for (String pass : passes) {
         </profile>
     </profiles>
 
-    <repositories>
-        <repository>
-            <id>jsdoctk1</id>
-            <url>http://jsdoctk-plugin.googlecode.com/svn/repo</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>jsdoctk2</id>
-            <url>http://jsdoctk-plugin.googlecode.com/svn/repo</url>
-        </pluginRepository>
-    </pluginRepositories>
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>jsdoctk1</id>-->
+            <!--<url>http://jsdoctk-plugin.googlecode.com/svn/repo</url>-->
+        <!--</repository>-->
+    <!--</repositories>-->
+    <!--<pluginRepositories>-->
+        <!--<pluginRepository>-->
+            <!--<id>jsdoctk2</id>-->
+            <!--<url>http://jsdoctk-plugin.googlecode.com/svn/repo</url>-->
+        <!--</pluginRepository>-->
+    <!--</pluginRepositories>-->
 
 </project>

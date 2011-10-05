@@ -11,9 +11,9 @@
         ${demo.entry.js}
     </head>
     <body onload="onLoad();">
-        Конфигурация поля: <select id="field-select"></select> Алгоритм: <select id="algorithm-select"></select>
+        Field: <select id="field-select"></select> Algorithm: <select id="algorithm-select"></select> <button id="run-button">Run</button>
         <div style="clear: both;"></div>
-        <div id="output" style="float: left; width: 450px; height: 450px; background-color: #EEE;"></div>
+        <div id="visual" style="float: left; width: 450px; height: 450px; background-color: #EEE;"></div>
         <div id="editor" style="position: relative; width: 550px; height: 450px;">
 window.onload = function() {
     var editor = ace.edit("editor");

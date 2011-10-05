@@ -285,23 +285,14 @@ robot.Field.prototype.getFiguresAt = function(coordinate) {
     return out;
 };
 
-///**
-// * @override
-// */
-//robot.Field.prototype.toString = function() {
-//    var out = "  ";
-//    for (var i = 0; i < this.width_; i++) {
-//        out += i + " ";
-//    }
-//    out += "\n";
-//
-//    for (var j = 0; j < this.height_; j++) {
-//        out += j + " ";
-//        for (var i = 0; i < this.width_; i++) {
-//            out += this.getWallValue_(new goog.math.Coordinate(i, j)) + " ";
-//        }
-//        out += "\n";
-//    }
-//    return out;
-//};
+/**
+ * @inheritDoc
+ */
+robot.Field.prototype.disposeInternal = function() {
+    robot.Field.superClass_.disposeInternal.call(this);
+    this.width_ = null;
+    this.height_ = null;
+    this.walls_ = null;
+    this.figures_ = null;
+};
 

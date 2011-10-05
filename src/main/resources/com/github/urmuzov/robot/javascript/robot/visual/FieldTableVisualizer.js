@@ -1,5 +1,6 @@
 goog.provide('robot.visual.FieldTableVisualizer');
 
+goog.require('robot.figures.StackableFigure');
 goog.require('robot.events.FigureEventType');
 goog.require('robot.events.FigureMovedEvent');
 goog.require('robot.visual.FigureVisualizer');
@@ -14,9 +15,11 @@ goog.require('goog.fx.dom.Slide');
  * Визуализатор поля в виде HTML таблицы
  * @class
  * @constructor
+ * @extends goog.Disposable
  * @param {!robot.Field} field
  */
 robot.visual.FieldTableVisualizer = function(field) {
+    goog.Disposable.call(this);
     /**
      * @private
      * @type number
@@ -44,6 +47,11 @@ robot.visual.FieldTableVisualizer = function(field) {
     this.figuresElement_ = null;
     /**
      * @private
+     * @type Element
+     */
+    this.containerElement_ = null;
+    /**
+     * @private
      * @type Array.<function(robot.visual.FieldTableVisualizer, robot.Field, robot.figures.Figure):?robot.visual.FigureVisualizer>
      */
     this.figureVisualizerCreators_ = [];
@@ -68,7 +76,11 @@ robot.visual.FieldTableVisualizer = function(field) {
      */
     this.cellSize_ = null;
 
-    goog.events.listen(
+    /**
+     * @private
+     * @type ?number
+     */
+    this.fieldListenKey_ = goog.events.listen(
         this.field_,
         [
             robot.events.FigureEventType.ADDED,
@@ -93,6 +105,7 @@ robot.visual.FieldTableVisualizer = function(field) {
         return figure instanceof robot.figures.WallE ? new robot.visual.WallEVisualizer(fieldVisializer, field, figure) : null;
     });
 };
+goog.inherits(robot.visual.FieldTableVisualizer, goog.Disposable);
 
 /**
  * @protected
@@ -149,7 +162,7 @@ robot.visual.FieldTableVisualizer.prototype.render = function(parentElement) {
     var field = this.field_;
     var width = field.getWidth();
     var height = field.getHeight();
-    var bounds = goog.style.getBounds(parentElement);
+    var bounds = goog.style.getBounds(this.parentElement_);
     var cellWidth = bounds.width / width;
     var cellHeight = bounds.height / height;
     // Устанавливаем размер ячейки, берем минимальное из ширины и высоты, чтобы вписаться в отведенную область
@@ -188,20 +201,40 @@ robot.visual.FieldTableVisualizer.prototype.render = function(parentElement) {
 
     this.figuresElement_ = goog.dom.createDom('div', {'className':'figures'});
 
-    var containerEl = goog.dom.createDom(
+    this.containerElement_ = goog.dom.createDom(
         'div',
         {'className':'field-container'},
         this.figuresElement_,
         this.tableElement_
     );
 
-    goog.dom.appendChild(parentElement, containerEl);
+    goog.dom.appendChild(this.parentElement_, this.containerElement_);
 };
 
 /**
-* @private
-* @param {robot.events.FigureEvent} figureEvent
-*/
+ * @inheritDoc
+ */
+robot.visual.FieldTableVisualizer.prototype.disposeInternal = function() {
+    goog.dom.removeNode(this.containerElement_);
+    robot.visual.FieldTableVisualizer.superClass_.disposeInternal.call(this);
+    goog.dispose(this.animationQueue_);
+    if (!goog.isNull(this.fieldListenKey_))
+        goog.events.unlistenByKey(this.fieldListenKey_);
+    delete this.field_;
+    delete this.parentElement_;
+    delete this.tableElement_;
+    delete this.figuresElement_;
+    delete this.containerElement_;
+    delete this.figureVisualizerCreators_;
+    delete this.figureVisualizersByUid_;
+    delete this.animationCreatorQueue_;
+    delete this.cellSize_;
+};
+
+/**
+ * @private
+ * @param {robot.events.FigureEvent} figureEvent
+ */
 robot.visual.FieldTableVisualizer.prototype.figureEventQueuePush_ = function(figureEvent) {
     this.animationCreatorQueue_.push(function() {
         var visual = this.getFigureVisualizer(figureEvent.figure);
