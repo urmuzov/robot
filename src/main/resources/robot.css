@@ -16,6 +16,10 @@
     position: absolute;
 }
 
+.figure-wrapper {
+    opacity: 0.7;
+}
+
 .figure-wrapper > div {
     background-color: gray;
     position: absolute;

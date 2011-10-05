@@ -13,15 +13,3 @@ robot.figures.WallE = function(coordinate, direction) {
     robot.figures.Figure.call(this, coordinate, direction);
 };
 goog.inherits(robot.figures.WallE, robot.figures.Figure);
-
-robot.figures.WallE.prototype.move = function() {
-    this.moveTo(this.getDirection());
-};
-
-robot.figures.WallE.prototype.turnLeft = function() {
-    this.rotateTo(robot.rotateCounterclockwiseFrom(this.getDirection()), robot.Rotation.COUNTERCLOCKWISE);
-};
-
-robot.figures.WallE.prototype.turnRight = function() {
-    this.rotateTo(robot.rotateClockwiseFrom(this.getDirection()), robot.Rotation.CLOCKWISE);
-};

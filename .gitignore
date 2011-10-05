@@ -1,2 +1,5 @@
 target/
 *.class
+*.ipr
+*.iml
+*.iws

@@ -166,3 +166,24 @@ robot.figures.Figure.prototype.toString = function() {
 robot.figures.Figure.prototype.toLogString = function() {
     return 'uid[' + goog.getUid(this) + "] coordinate[" + this.coordinate_ + "] direction[" + this.direction_ + "]";
 };
+
+/**
+ * Перемещение на одну клетку вперед
+ */
+robot.figures.Figure.prototype.move = function() {
+    this.moveTo(this.getDirection());
+};
+
+/**
+ * Поворот на 90 градусов против часовой стрелки
+ */
+robot.figures.Figure.prototype.turnLeft = function() {
+    this.rotateTo(robot.rotateCounterclockwiseFrom(this.getDirection()), robot.Rotation.COUNTERCLOCKWISE);
+};
+
+/**
+ * Поворот на 90 градусов по часовой стрелке
+ */
+robot.figures.Figure.prototype.turnRight = function() {
+    this.rotateTo(robot.rotateClockwiseFrom(this.getDirection()), robot.Rotation.CLOCKWISE);
+};

@@ -7,6 +7,7 @@ goog.require('robot.Direction');
 goog.require('robot.Rotation');
 goog.require('robot.figures.WallE');
 goog.require('robot.figures.StackableFigure');
+goog.require('robot.figures.SummonerFigure');
 
 var field;
 var fieldVisualizer;
@@ -33,6 +34,17 @@ function onLoad() {
         var stack = new robot.figures.StackableFigure(new c(0, 2), 2);
         var wallE = new robot.figures.WallE(new c(0, 0), robot.Direction.DOWN);
         var fig = new robot.figures.Figure(new c(5, 5), robot.Direction.DOWN);
+        var summoner = new robot.figures.SummonerFigure(new c(6, 0), robot.Direction.DOWN);
+        summoner.setField(field);
+        summoner.summon(5);
+        summoner.move();
+        summoner.summon(2);
+        summoner.move();
+        summoner.turnLeft();
+        summoner.turnLeft();
+        summoner.move();
+        summoner.dismiss(2);
+        summoner.move();
         stack.setField(field);
         field.addFigure(wallE);
         wallE.move();
