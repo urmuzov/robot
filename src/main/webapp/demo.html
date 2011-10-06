@@ -11,17 +11,19 @@
         ${demo.entry.js}
     </head>
     <body onload="onLoad();">
-        Field: <select id="field-select"></select> Algorithm: <select id="algorithm-select"></select> <button id="run-original-button">Run Original</button> <button id="run-editor-button">Run Editor</button>
+        Field: <select id="field-select"></select>
+        Algorithm: <select id="algorithm-select"></select>
+        Speed: <div id="speed-slider"><div class="goog-slider-thumb"></div></div> <input id="speed-value" />ms
+        <button id="run-original-button">Run Original</button>
+        <button id="run-editor-button">Run Editor</button>
         <div style="clear: both;"></div>
         <div id="visual" style="float: left; width: 450px; height: 450px; background-color: #EEE;"></div>
         <div id="editor" style="position: relative; width: 550px; height: 450px;">
-window.onload = function() {
-    var editor = ace.edit("editor");
-    editor.setTheme("ace/theme/twilight");
-    var JavaScriptMode = require("ace/mode/javascript").Mode;
-    editor.getSession().setMode(new JavaScriptMode());
-};
-        </div>
+function (field) {
+    var figure1 = new robot.figures.Figure(new goog.math.Coordinate(0, 0), robot.Direction.DOWN);
+    figure.setField(field);
+}
+</div>
         <div id="debug" style="width: 1000px; height: 300px; font-size: 70%; overflow-y: scroll;"></div>
     </body>
 </html>

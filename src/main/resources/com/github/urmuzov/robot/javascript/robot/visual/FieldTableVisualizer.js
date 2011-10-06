@@ -124,6 +124,20 @@ robot.visual.FieldTableVisualizer.prototype.addFigureVisualizerCreator = functio
 };
 
 /**
+ * @return {number}
+ */
+robot.visual.FieldTableVisualizer.prototype.getAnimationTime = function() {
+    return this.animationTime_;
+};
+
+/**
+ * @param {number} animationTime
+ */
+robot.visual.FieldTableVisualizer.prototype.setAnimationTime = function(animationTime) {
+    this.animationTime_ = animationTime;
+};
+
+/**
  * Получение визуализатора фигуры (и создание, если не был создан)
  * @param {!robot.figures.Figure} figure
  * @return {!robot.visual.FigureVisualizer}

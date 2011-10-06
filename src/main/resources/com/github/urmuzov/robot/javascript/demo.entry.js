@@ -1,7 +1,7 @@
 goog.require('goog.dom');
 goog.require('goog.debug.DivConsole');
 goog.require('goog.debug.Logger');
-
+goog.require('goog.ui.Slider');
 goog.require('robot.visual.FieldTableVisualizer');
 goog.require('robot.PredefinedFields');
 goog.require('robot.predefined.fields');
@@ -32,7 +32,10 @@ var algorithm = function(field) {
  * @type robot.visual.FieldTableVisualizer
  */
 var visualizer = null;
-
+/**
+ * @type number
+ */
+var animationTime = 1000;
 /**
  * @type ace.AceEditor
  */
@@ -92,7 +95,28 @@ function onLoad() {
     var runEditorButton = goog.dom.getElement('run-editor-button');
     goog.events.listen(runEditorButton, goog.events.EventType.CLICK, goog.partial(run, false));
 
+    var slider = new goog.ui.Slider();
+    slider.setMinimum(10);
+    slider.setMaximum(2000);
+    slider.setValue(animationTime);
+    slider.setMoveToPointEnabled(true);
+    slider.decorate(goog.dom.getElement('speed-slider'));
+    slider.addEventListener(goog.ui.Component.EventType.CHANGE, function(e) {
+        updateSlider(e.target);
+    });
+
+    var speedValue = goog.dom.getElement('speed-value');
+    goog.events.listen(speedValue, [goog.events.EventType.CHANGE, goog.events.EventType.KEYUP], function(e) {
+        slider.setValue(goog.string.toNumber(e.target.value));
+    });
+
     update(fldId, algId);
+    updateSlider(slider);
+}
+
+function updateSlider(slider) {
+    animationTime = slider.getValue();
+    goog.dom.getElement('speed-value').value = animationTime;
 }
 
 function update(fId, algId) {
@@ -107,6 +131,7 @@ function update(fId, algId) {
     fieldId = fId;
     field = robot.PredefinedFields.fields[fId]();
     visualizer = new robot.visual.FieldTableVisualizer(field);
+    visualizer.setAnimationTime(animationTime);
 
     var visualElement = goog.dom.getElement('visual');
     if (visualElement == null) {

@@ -48,3 +48,25 @@
 .field td.border-left {
     border-left: 1px solid black;
 }
+
+#speed-slider {
+    position: relative;
+    display: inline-block;
+    width: 200px;
+    height: 10px;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+#speed-slider .goog-slider-thumb {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50px;
+    background-color: black;
+}
+
+#speed-value {
+    width: 40px;
+    text-align: right;
+}

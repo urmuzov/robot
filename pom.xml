@@ -16,7 +16,7 @@
                 Входная точка в приложение относительно ${input.closurePackage}/javascript или ${basedir}/src/main/webapp/
                 Включен ли вывод отладочной информации
         -->
-        <passes>index demo</passes>
+        <passes>demo</passes>
         <input.closurePackage>com.github.urmuzov.robot</input.closurePackage>
         <input.debug.maven>false</input.debug.maven>
         <input.debug.javascript>false</input.debug.javascript>
