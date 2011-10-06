@@ -26,13 +26,13 @@ goog.inherits(robot.figures.StackableFigure, robot.figures.Figure);
  * @protected
  * @type goog.debug.Logger
  */
-robot.figures.StackableFigure.prototype.logger_ = goog.debug.Logger.getLogger('robot.figures.StackableFigure');
+robot.figures.StackableFigure.prototype.logger = goog.debug.Logger.getLogger('robot.figures.StackableFigure');
 
 /**
  * @param {number} count
  */
 robot.figures.StackableFigure.prototype.setCount = function(count) {
-    this.logger_.info("Setting Count: uid[" + goog.getUid(this) + "] from " + this.count_ + " to " + count);
+    this.logger.info("Setting Count: uid[" + goog.getUid(this) + "] from " + this.count_ + " to " + count);
     this.count_ = count;
     this.update();
 };

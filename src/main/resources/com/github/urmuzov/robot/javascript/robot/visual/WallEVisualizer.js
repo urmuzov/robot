@@ -21,7 +21,7 @@ goog.inherits(robot.visual.WallEVisualizer, robot.visual.FigureVisualizer);
  * @param {!Element} container
  * @param {!robot.events.FigureEvent} figureEvent
  */
-robot.visual.WallEVisualizer.prototype.renderFigureDirection_ = function(direction, container, figureEvent) {
+robot.visual.WallEVisualizer.prototype.renderFigureDirection = function(direction, container, figureEvent) {
     var h = 'unknown';
     if (direction == robot.Direction.UP) {
         h = '&uarr;';

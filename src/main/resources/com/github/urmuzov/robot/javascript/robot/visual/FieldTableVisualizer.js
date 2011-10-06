@@ -111,7 +111,7 @@ goog.inherits(robot.visual.FieldTableVisualizer, goog.Disposable);
  * @protected
  * @type goog.debug.Logger
  */
-robot.visual.FieldTableVisualizer.prototype.logger_ = goog.debug.Logger.getLogger('robot.visual.FieldTableVisualizer');
+robot.visual.FieldTableVisualizer.prototype.logger = goog.debug.Logger.getLogger('robot.visual.FieldTableVisualizer');
 
 /**
  * Добавление функции создающей фигуры.

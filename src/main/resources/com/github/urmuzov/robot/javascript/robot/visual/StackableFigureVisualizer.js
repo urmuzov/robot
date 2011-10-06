@@ -21,7 +21,7 @@ goog.inherits(robot.visual.StackableFigureVisualizer, robot.visual.FigureVisuali
  * @param {!Element} container
  * @param {!robot.events.FigureEvent} figureEvent
  */
-robot.visual.StackableFigureVisualizer.prototype.renderFigureDirection_ = function(direction, container, figureEvent) {
+robot.visual.StackableFigureVisualizer.prototype.renderFigureDirection = function(direction, container, figureEvent) {
     var stack = (/** @type robot.figures.StackableFigure */ this.getFigure());
     var el = goog.dom.createDom('div', {'className': 'figure-robot', 'innerHTML':'Stack:'+goog.getUid(stack)+'<br />Count:'+ figureEvent.snapshotAfter.count});
     goog.dom.appendChild(container, el);

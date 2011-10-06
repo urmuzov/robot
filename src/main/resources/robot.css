@@ -52,7 +52,7 @@
 #speed-slider {
     position: relative;
     display: inline-block;
-    width: 200px;
+    width: 125px;
     height: 10px;
     border-radius: 5px;
     border: 1px solid gray;
@@ -69,4 +69,14 @@
 #speed-value {
     width: 40px;
     text-align: right;
+}
+
+.left-column {
+    float: left;
+    width: 450px;
+}
+
+.right-column {
+    width: 550px;
+    float: left;
 }

@@ -11,14 +11,18 @@
         ${demo.entry.js}
     </head>
     <body onload="onLoad();">
-        Field: <select id="field-select"></select>
-        Algorithm: <select id="algorithm-select"></select>
-        Speed: <div id="speed-slider"><div class="goog-slider-thumb"></div></div> <input id="speed-value" />ms
-        <button id="run-original-button">Run Original</button>
-        <button id="run-editor-button">Run Editor</button>
+        <div id="visual-controls" class="left-column">
+            Field: <select id="field-select"></select>
+            Speed: <div id="speed-slider"><div class="goog-slider-thumb"></div></div> <input id="speed-value" />ms
+        </div>
+        <div id="editor-controls" class="right-column">
+            Algorithm: <select id="algorithm-select"></select>
+            <button id="run-original-button">Run Original</button>
+            <button id="run-editor-button">Run Editor</button>
+        </div>
         <div style="clear: both;"></div>
-        <div id="visual" style="float: left; width: 450px; height: 450px; background-color: #EEE;"></div>
-        <div id="editor" style="position: relative; width: 550px; height: 450px;">
+        <div id="visual" class="left-column" style="height: 450px; background-color: #EEE;"></div>
+        <div id="editor" class="right-column" style="position: relative; height: 450px; ">
 function (field) {
     var figure1 = new robot.figures.Figure(new goog.math.Coordinate(0, 0), robot.Direction.DOWN);
     figure.setField(field);

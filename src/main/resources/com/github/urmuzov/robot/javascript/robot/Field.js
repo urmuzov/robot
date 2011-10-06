@@ -24,7 +24,7 @@ robot.Field = function(width, height) {
     this.walls_ = robot.Field.generateEmptyField(width, height);
     this.figures_ = [];
 
-    this.logger_.info("created " + width + "x" + height);
+    this.logger.info("created " + width + "x" + height);
 };
 goog.inherits(robot.Field, goog.events.EventTarget);
 
@@ -32,7 +32,7 @@ goog.inherits(robot.Field, goog.events.EventTarget);
  * @protected
  * @type goog.debug.Logger
  */
-robot.Field.prototype.logger_ = goog.debug.Logger.getLogger('robot.Field');
+robot.Field.prototype.logger = goog.debug.Logger.getLogger('robot.Field');
 
 /**
  * Положение стены у ячейки
@@ -238,7 +238,7 @@ robot.Field.prototype.addFigure = function(figure) {
     figure.setField(this);
     var ev = new robot.events.FigureEvent(robot.events.FigureEventType.ADDED, figure, figure.getSnapshot(), figure.getSnapshot());
     this.dispatchEvent(ev);
-    this.logger_.info("added " + ev.toString());
+    this.logger.info("added " + ev.toString());
 
 };
 
@@ -255,7 +255,7 @@ robot.Field.prototype.removeFigure = function(figure) {
     this.field_ = null;
     var ev = new robot.events.FigureEvent(robot.events.FigureEventType.REMOVED, figure, figure.getSnapshot(), figure.getSnapshot());
     this.dispatchEvent(ev);
-    this.logger_.info("removed " + ev.toString());
+    this.logger.info("removed " + ev.toString());
 };
 
 

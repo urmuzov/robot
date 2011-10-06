@@ -45,7 +45,7 @@ robot.visual.FigureVisualizer = function(fieldVisualizer, field, figure) {
  * @protected
  * @type goog.debug.Logger
  */
-robot.visual.FigureVisualizer.prototype.logger_ = goog.debug.Logger.getLogger('robot.visual.FigureVisualizer');
+robot.visual.FigureVisualizer.prototype.logger = goog.debug.Logger.getLogger('robot.visual.FigureVisualizer');
 
 /**
  * @return {!robot.visual.FieldTableVisualizer}
@@ -104,7 +104,7 @@ robot.visual.FigureVisualizer.prototype.attachAnimation = function(animationQueu
  * @param {!robot.events.FigureEvent} figureEvent
  */
 robot.visual.FigureVisualizer.prototype.attachAddedAnimation = function(animationQueue, animationTime, figureEvent) {
-    this.fillFigureWrapper_(figureEvent);
+    this.fillFigureWrapper(figureEvent);
     var coordinate = figureEvent.snapshotAfter.coordinate;
     var direction = figureEvent.snapshotAfter.direction;
     var pixelPosition = this.fieldVisualizer_.getCellPosition(coordinate);
@@ -113,7 +113,7 @@ robot.visual.FigureVisualizer.prototype.attachAddedAnimation = function(animatio
         goog.style.setPosition(this.figureWrapperEl_, pixelPosition);
     }, false, this);
     animationQueue.add(animation);
-    this.logger_.info("Animation FadeIn pixelPosition: " + pixelPosition);
+    this.logger.info("Animation FadeIn pixelPosition: " + pixelPosition);
 };
 
 /**
@@ -125,7 +125,7 @@ robot.visual.FigureVisualizer.prototype.attachMovedAnimation = function(animatio
     var oldCoordXY = this.fieldVisualizer_.getCellPosition(figureEvent.snapshotBefore.coordinate);
     var newCoordXY = this.fieldVisualizer_.getCellPosition(figureEvent.snapshotAfter.coordinate);
     animationQueue.add(new goog.fx.dom.Slide(this.figureWrapperEl_, [oldCoordXY.x, oldCoordXY.y], [newCoordXY.x, newCoordXY.y], animationTime));
-    this.logger_.info("Animation Move: from " + oldCoordXY + " to " + newCoordXY);
+    this.logger.info("Animation Move: from " + oldCoordXY + " to " + newCoordXY);
 };
 
 /**
@@ -147,7 +147,7 @@ robot.visual.FigureVisualizer.prototype.attachRotatedAnimation = function(animat
         animationStep.add(new goog.fx.dom.FadeIn(figureNextEl, animationTime));
         animationQueue.add(animationStep);
     }
-    this.logger_.info("Animation Rotated");
+    this.logger.info("Animation Rotated");
 };
 
 /**
@@ -164,7 +164,7 @@ robot.visual.FigureVisualizer.prototype.attachCrushedAnimation = function(animat
     animationQueue.add(new goog.fx.dom.BgColorTransform(figureEl, bgColor, redColor, animationTime / 3));
     animationQueue.add(new goog.fx.dom.BgColorTransform(figureEl, redColor, bgColor, animationTime / 3));
     animationQueue.add(new goog.fx.dom.BgColorTransform(figureEl, bgColor, redColor, animationTime / 3));
-    this.logger_.info("Animation Crush");
+    this.logger.info("Animation Crush");
 };
 
 /**
@@ -175,7 +175,7 @@ robot.visual.FigureVisualizer.prototype.attachCrushedAnimation = function(animat
 robot.visual.FigureVisualizer.prototype.attachUpdatedAnimation = function(animationQueue, animationTime, figureEvent) {
     var directionElsBackup = goog.object.getValues(this.figureElsByDirection_);
     var oldFigureEl = this.figureElsByDirection_[figureEvent.snapshotBefore.direction];
-    this.fillFigureWrapper_(figureEvent);
+    this.fillFigureWrapper(figureEvent);
     var newFigureEl = this.figureElsByDirection_[figureEvent.snapshotAfter.direction];
 
     var fadeOut = new goog.fx.dom.Fade(oldFigureEl, 1, 0.5, animationTime / 2);
@@ -190,7 +190,7 @@ robot.visual.FigureVisualizer.prototype.attachUpdatedAnimation = function(animat
     }, false, this);
 
 
-    this.logger_.info("Animation Update");
+    this.logger.info("Animation Update");
 };
 
 /**
@@ -213,7 +213,7 @@ robot.visual.FigureVisualizer.prototype.attachRemovedAnimation = function(animat
     }, false, this);
 
 
-    this.logger_.info("Animation Removed");
+    this.logger.info("Animation Removed");
 };
 
 /**
@@ -221,12 +221,12 @@ robot.visual.FigureVisualizer.prototype.attachRemovedAnimation = function(animat
  * @protected
  * @param {!robot.events.FigureEvent} figureEvent
  */
-robot.visual.FigureVisualizer.prototype.fillFigureWrapper_ = function(figureEvent) {
+robot.visual.FigureVisualizer.prototype.fillFigureWrapper = function(figureEvent) {
     var figureEl;
     var directions = robot.DirectionsArray;
     this.figureElsByDirection_ = {};
     for (var i = 0; i < directions.length; i++) {
-        figureEl = this.createFigureDirectionElement_(directions[i], figureEvent);
+        figureEl = this.createFigureDirectionElement(directions[i], figureEvent);
         this.figureElsByDirection_[directions[i]] = figureEl;
         goog.dom.appendChild(this.figureWrapperEl_, figureEl);
     }
@@ -239,11 +239,11 @@ robot.visual.FigureVisualizer.prototype.fillFigureWrapper_ = function(figureEven
  * @param {!robot.events.FigureEvent} figureEvent
  * @return {!Element}
  */
-robot.visual.FigureVisualizer.prototype.createFigureDirectionElement_ = function(direction, figureEvent) {
+robot.visual.FigureVisualizer.prototype.createFigureDirectionElement = function(direction, figureEvent) {
     var figureEl = goog.dom.createDom('div');
     goog.style.setOpacity(figureEl, 0);
     goog.style.setSize(figureEl, this.fieldVisualizer_.getCellSize());
-    this.renderFigureDirection_(direction, figureEl, figureEvent);
+    this.renderFigureDirection(direction, figureEl, figureEvent);
     return figureEl;
 };
 /**
@@ -253,7 +253,7 @@ robot.visual.FigureVisualizer.prototype.createFigureDirectionElement_ = function
  * @param {!Element} container
  * @param {!robot.events.FigureEvent} figureEvent
  */
-robot.visual.FigureVisualizer.prototype.renderFigureDirection_ = function(direction, container, figureEvent) {
+robot.visual.FigureVisualizer.prototype.renderFigureDirection = function(direction, container, figureEvent) {
     var h = 'unknown';
     if (direction == robot.Direction.UP) {
         h = '&uarr;';

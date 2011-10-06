@@ -43,7 +43,7 @@ goog.inherits(robot.figures.Figure, goog.events.EventTarget);
  * @protected
  * @type goog.debug.Logger
  */
-robot.figures.Figure.prototype.logger_ = goog.debug.Logger.getLogger('robot.figures.Figure');
+robot.figures.Figure.prototype.logger = goog.debug.Logger.getLogger('robot.figures.Figure');
 
 /**
  * Получение поля, которому принадлежит эта фигура
@@ -127,15 +127,15 @@ robot.figures.Figure.prototype.moveTo = function(direction) {
     this.coordinate_ = newCoord;
     var after = this.getSnapshot();
     if (this.field_.isWallOn(direction, before.coordinate)) {
-        this.logger_.info("crushed " + this.toLogString());
+        this.logger.info("crushed " + this.toLogString());
         var ev = new robot.events.FigureMovedEvent(robot.events.FigureEventType.CRUSHED, this, before, after, direction);
         this.dispatchEvent(ev);
-        this.logger_.info("dispatched " + ev.toString());
+        this.logger.info("dispatched " + ev.toString());
         throw new robot.WallException(direction, before.coordinate);
     }
     var ev = new robot.events.FigureMovedEvent(robot.events.FigureEventType.MOVED, this, before, after, direction);
     this.dispatchEvent(ev);
-    this.logger_.info("moved " + ev.toString());
+    this.logger.info("moved " + ev.toString());
 };
 
 /**
@@ -149,7 +149,7 @@ robot.figures.Figure.prototype.rotateTo = function(direction, rotation) {
     var after = this.getSnapshot();
     var ev = new robot.events.FigureRotatedEvent(this, before, after, rotation);
     this.dispatchEvent(ev);
-    this.logger_.info("rotated " + ev.toString());
+    this.logger.info("rotated " + ev.toString());
 };
 
 
@@ -158,17 +158,17 @@ robot.figures.Figure.prototype.rotateTo = function(direction, rotation) {
  */
 robot.figures.Figure.prototype.update = function() {
     var before = this.getSnapshot();
-    this.updateInternal_();
+    this.updateInternal();
     var after = this.getSnapshot();
     var ev = new robot.events.FigureEvent(robot.events.FigureEventType.UPDATED, this, before, after);
     this.dispatchEvent(ev);
-    this.logger_.info("updated " + ev.toString());
+    this.logger.info("updated " + ev.toString());
 };
 
 /**
  * @protected
  */
-robot.figures.Figure.prototype.updateInternal_ = function() {
+robot.figures.Figure.prototype.updateInternal = function() {
 };
 
 /**
