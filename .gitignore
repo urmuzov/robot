@@ -3,3 +3,4 @@ target/
 *.ipr
 *.iml
 *.iws
+src/main/python/closure-library/build/*.pyc

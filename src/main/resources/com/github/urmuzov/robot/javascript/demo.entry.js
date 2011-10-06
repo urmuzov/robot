@@ -87,8 +87,10 @@ function onLoad() {
         update(fieldId, select.options[select.selectedIndex].value);
     });
 
-    var runButton = goog.dom.getElement('run-button');
-    goog.events.listen(runButton, goog.events.EventType.CLICK, run);
+    var runOriginalButton = goog.dom.getElement('run-original-button');
+    goog.events.listen(runOriginalButton, goog.events.EventType.CLICK, goog.partial(run, true));
+    var runEditorButton = goog.dom.getElement('run-editor-button');
+    goog.events.listen(runEditorButton, goog.events.EventType.CLICK, goog.partial(run, false));
 
     update(fldId, algId);
 }
@@ -113,7 +115,7 @@ function update(fId, algId) {
     visualizer.render(visualElement);
 }
 
-function run() {
+function run(executeOriginal) {
     if (goog.isNull(algorithm)) {
         alert('Algorithm is not selected');
         return;
@@ -127,14 +129,16 @@ function run() {
     }
     update(fieldId, algorithmId);
     try {
-        // temporary set window['field']
-        window['field'] = field;
-        goog.globalEval("(" + editor.getSession().getValue() + ")(window['field']);");
-        delete window['field'];
-        //algorithm(field);
+        if (executeOriginal) {
+            algorithm(field);
+        } else {
+            // temporary set window['field']
+            window['field'] = field;
+            goog.globalEval("(" + editor.getSession().getValue() + ")(window['field']);");
+            delete window['field'];
+        }
     } catch (e) {
         logger.severe(e.toString());
-        throw e;
     }
     visualizer.play();
 }

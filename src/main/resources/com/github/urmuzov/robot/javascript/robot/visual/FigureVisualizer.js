@@ -107,9 +107,13 @@ robot.visual.FigureVisualizer.prototype.attachAddedAnimation = function(animatio
     this.fillFigureWrapper_(figureEvent);
     var coordinate = figureEvent.snapshotAfter.coordinate;
     var direction = figureEvent.snapshotAfter.direction;
-    goog.style.setPosition(this.figureWrapperEl_, this.fieldVisualizer_.getCellPosition(coordinate));
-    animationQueue.add(new goog.fx.dom.FadeIn(this.figureElsByDirection_[direction], animationTime));
-    this.logger_.info("Animation FadeIn");
+    var pixelPosition = this.fieldVisualizer_.getCellPosition(coordinate);
+    var animation = new goog.fx.dom.FadeIn(this.figureElsByDirection_[direction], animationTime);
+    animation.addEventListener(goog.fx.Transition.EventType.BEGIN, function() {
+        goog.style.setPosition(this.figureWrapperEl_, pixelPosition);
+    }, false, this);
+    animationQueue.add(animation);
+    this.logger_.info("Animation FadeIn pixelPosition: " + pixelPosition);
 };
 
 /**
@@ -200,8 +204,8 @@ robot.visual.FigureVisualizer.prototype.attachRemovedAnimation = function(animat
     var fadeOut = new goog.fx.dom.Fade(oldFigureEl, 1, 0, animationTime);
     animationQueue.add(fadeOut);
 
+    var directionEls = goog.object.getValues(this.figureElsByDirection_);
     fadeOut.addEventListener(goog.fx.Transition.EventType.END, function() {
-        var directionEls = goog.object.getValues(this.figureElsByDirection_);
         for (var i = 0; i < directionEls.length; i++) {
             goog.dom.removeNode(directionEls[i]);
         }
@@ -263,4 +267,3 @@ robot.visual.FigureVisualizer.prototype.renderFigureDirection_ = function(direct
     var el = goog.dom.createDom('div', {'innerHTML':'figure:' + goog.getUid(this.figure_) + "<br />" + h});
     goog.dom.appendChild(container, el);
 };
-

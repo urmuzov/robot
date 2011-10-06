@@ -69,11 +69,19 @@ robot.figures.Figure.prototype.setField = function(field) {
 };
 
 /**
- * Получение координаты X
+ * Получение координаты
  * @return {!goog.math.Coordinate}
  */
 robot.figures.Figure.prototype.getCoordinate = function() {
     return this.coordinate_.clone();
+};
+
+/**
+ * Установка координаты
+ * @param {!goog.math.Coordinate} coordinate
+ */
+robot.figures.Figure.prototype.setCoordinate = function(coordinate) {
+    this.coordinate_ = coordinate;
 };
 
 /**
@@ -82,6 +90,14 @@ robot.figures.Figure.prototype.getCoordinate = function() {
  */
 robot.figures.Figure.prototype.getDirection = function() {
     return this.direction_;
+};
+
+/**
+ * Установка направления
+ * @param {!robot.Direction} direction
+ */
+robot.figures.Figure.prototype.setDirection = function(direction) {
+    this.direction_ = direction;
 };
 
 /**
