@@ -20,7 +20,7 @@ robot.ui.DemoUI = function() {
      * @const
      * @type string
      */
-    this.SELECT_NOTHING_ID = "*";
+    this.SELECT_NOTHING_ID = "___";
     /**
      * @const
      * @type string
@@ -159,6 +159,7 @@ robot.ui.DemoUI.prototype.updateFieldSelectElement = function() {
         true
     );
     goog.dom.appendChild(this.fieldsSelect_, predefinedFieldsGroup);
+    this.setFieldId(this.fieldsSelect_.options[this.fieldsSelect_.selectedIndex].value);
 
     goog.events.listen(this.fieldsSelect_, goog.events.EventType.CHANGE, goog.bind(function(e) {
         var select = e.target;
@@ -186,6 +187,8 @@ robot.ui.DemoUI.prototype.updateAlgorithmSelectElement = function() {
     );
     goog.dom.appendChild(this.algorithmsSelect_, userAlgorithmsGroup);
 
+    this.setAlgorithmId(this.algorithmsSelect_.options[this.algorithmsSelect_.selectedIndex].value);
+
     goog.events.listen(this.algorithmsSelect_, goog.events.EventType.CHANGE, goog.bind(function(e) {
         var select = e.target;
         this.setAlgorithmId(select.options[select.selectedIndex].value);
@@ -207,11 +210,11 @@ robot.ui.DemoUI.prototype.createOptionsMap = function(keys, keyPrefix) {
     return out;
 };
 /**
- *
  * @param {string} label
  * @param {!Object.<string, string>} optionsMap
- * @param selectedId
- * @param selectFirstIfNothingSelected
+ * @param {string} selectedId
+ * @param {boolean} selectFirstIfNothingSelected
+ * @return {!Element}
  */
 robot.ui.DemoUI.prototype.createOptGroup = function(label, optionsMap, selectedId, selectFirstIfNothingSelected) {
     var selectedNothing = (selectedId == this.SELECT_NOTHING_ID);
@@ -224,7 +227,7 @@ robot.ui.DemoUI.prototype.createOptGroup = function(label, optionsMap, selectedI
             if (selectedNothing) {
                 if (!firstSelected && selectFirstIfNothingSelected) {
                     firstSelected = true;
-                    this.setAlgorithmId(i);
+                    currentOptionSelected = true;
                 }
             } else {
                 if (selectedId == i) {
@@ -279,7 +282,8 @@ robot.ui.DemoUI.prototype.reloadField = function () {
     goog.dispose(this.visualizer_);
     goog.dispose(this.field_);
     var fieldId = this.getFieldId();
-    this.field_ = robot.PredefinedFields.fields[fieldId]();
+    var fieldCreator = robot.PredefinedFields.fields[fieldId];
+    this.field_ = fieldCreator();
     this.visualizer_ = new robot.visual.FieldTableVisualizer(this.field_);
     this.visualizer_.setAnimationTime(this.getAnimationTime());
 

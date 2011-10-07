@@ -1,9 +1,17 @@
 goog.require('robot.ui.DemoUI');
-var demo;
+goog.require('robot.ui.ExportsUI');
+
+
+var demoUI;
+var exportsUI;
 /**
  * @export
  */
 function onLoad() {
-    demo = new robot.ui.DemoUI();
+    demoUI = new robot.ui.DemoUI();
+    exportsUI = new robot.ui.ExportsUI();
+    goog.events.listen(goog.dom.getElement('show-exports'), goog.events.EventType.CLICK, function() {
+        exportsUI.showDialog();
+    });
 }
 
