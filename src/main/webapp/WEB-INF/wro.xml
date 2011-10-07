@@ -7,8 +7,9 @@
         <css minimize="false">classpath:robot.css</css>
     </group>
     <group name="demo">
-        <css minimize="false">classpath:robot.css</css>
+        <css minimize="false">classpath:bootstrap/bootstrap.min.css</css>
         <css minimize="false">classpath:goog_ui_Dialog.css</css>
+        <css minimize="false">classpath:robot.css</css>
     </group>
 
 </groups>

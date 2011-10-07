@@ -1,3 +1,6 @@
 [submodule "src/main/resources/closure-externs"]
 	path = src/main/resources/closure-externs
 	url = https://urmuzov@github.com/urmuzov/closure-externs.git
+[submodule "src/main/resources/bootstrap"]
+	path = src/main/resources/bootstrap
+	url = https://github.com/twitter/bootstrap.git

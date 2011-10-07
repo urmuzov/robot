@@ -1,41 +1,79 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>${artifactId}</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="target/demo.css" rel="stylesheet"/>
-        <!--<script src="target/demo.js"></script>-->
-        <script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="ace/theme-twilight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="ace/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
-        ${demo.entry.js}
-    </head>
-    <body onload="onLoad();">
-        <div id="visual-controls" class="left-column">
-            Field: <select id="field-select"></select>
-            Speed: <div id="speed-slider"><div class="goog-slider-thumb"></div></div> <input id="speed-value" />ms
+<head>
+    <title>${artifactId}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link href="target/demo.css" rel="stylesheet"/>
+    <!--<script src="target/demo.js"></script>-->
+    <script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="ace/theme-twilight.js" type="text/javascript" charset="utf-8"></script>
+    <script src="ace/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
+    ${demo.entry.js}
+</head>
+<body onload="onLoad();">
+<div class="topbar">
+    <div class="fill">
+        <div class="container">
+            <a class="brand" href="#">Robot Demo</a>
+            <ul class="nav">
+                <li><a href="javascript:;" id="show-exports">Exports</a></li>
+            </ul>
         </div>
-        <div id="editor-controls" class="right-column">
-            Algorithm: <select id="algorithm-select"></select>
-            <button id="save-as">Save As</button>
-            <button id="save">Save</button>
-            <button id="remove">Remove</button>
-            <div style="float:right;">
-                <button id="run-original-button">Run Original</button>
-                <button id="run-editor-button">Run Editor</button>
-            </div>
-            <div style="float:left;">
-                <button id="show-exports">Show Exports</button>
-            </div>
-        </div>
-        <div style="clear: both;"></div>
-        <div id="visual" class="left-column" style="height: 450px; background-color: #EEE;"></div>
-        <div id="editor" class="right-column" style="position: relative; height: 450px; ">
-function (field) {
-    var figure1 = new robot.figures.Figure(new goog.math.Coordinate(0, 0), robot.Direction.DOWN);
-    figure.setField(field);
-}
+    </div>
 </div>
-        <div id="debug" style="width: 1000px; height: 300px; font-size: 70%; overflow-y: scroll;"></div>
-    </body>
+<div class="container">
+    <div class="content">
+        <div class="row" style="margin-bottom: 10px;">
+            <div class="span6">Speed:
+                <div id="speed-slider">
+                    <div class="goog-slider-thumb"></div>
+                </div>
+                <input id="speed-value"/>ms
+            </div>
+            <button id="save-as" class="btn span2">Save As</button>
+            <button id="save" class="btn span2">Save</button>
+            <button id="remove" class="btn danger span2">Remove</button>
+            <button id="run-original-button" class="btn primary span2"
+                    style="padding-left: 12px; padding-right: 12px;">Run Original
+            </button>
+            <button id="run-editor-button" class="btn primary span2">Run Editor</button>
+        </div>
+        <div class="row">
+            <div class="span6">
+                <div class="row">
+                    <div class="span3">Field:</div>
+                    <div class="span3">Algorithm:</div>
+                </div>
+                <div class="row" style="margin-bottom: 10px;">
+                    <div class="span3"><select id="field-select" class="span3" multiple="multiple" size="7"></select>
+                    </div>
+                    <div class="span3"><select id="algorithm-select" class="span3" multiple="multiple"
+                                               size="7"></select></div>
+                </div>
+                <div class="row">
+                    <div id="visual" class="span6" style="height: 340px"></div>
+                </div>
+            </div>
+            <div class="span10">
+                <div class="row">
+                    <div id="editor" class="span10" style="position: relative;">
+                        function (field) {
+                        var figure1 = new robot.figures.Figure(new goog.math.Coordinate(0, 0), robot.Direction.DOWN);
+                        figure.setField(field);
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h1>Debug</h1>
+
+        <div class="row">
+            <div id="debug" class="span16" style="height: 300px; font-size: 70%; overflow-y: scroll;"></div>
+        </div>
+    </div>
+    <footer>
+        <p>Alexander Urmuzov, 2011</p>
+    </footer>
+</div>
+</body>
 </html>
