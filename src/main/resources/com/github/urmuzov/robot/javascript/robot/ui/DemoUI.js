@@ -84,9 +84,13 @@ robot.ui.DemoUI = function() {
      */
     this.algorithmsSelect_ = goog.dom.getElement('algorithm-select');
     this.updateAlgorithmSelectElement();
+    /**
+     * @private
+     * @type Element
+     */
+    this.fieldsSelect_ = goog.dom.getElement('field-select');
+    this.updateFieldSelectElement();
 
-
-    this.initFieldSelectElement('field-select');
     this.initSliderValue('speed-value');
 
     /**
@@ -147,33 +151,16 @@ robot.ui.DemoUI.prototype.createEditor = function(elementId) {
     return editor;
 };
 
-/**
- * @param {string} elementId
- */
-robot.ui.DemoUI.prototype.initFieldSelectElement = function(elementId) {
-    var fieldsSelect = goog.dom.getElement(elementId);
-    var fields = robot.PredefinedFields.fields;
-    var selectedFieldId = this.getFieldId();
-    var selectedNothing = (selectedFieldId == this.SELECT_NOTHING_ID);
-    var fieldSelected = false;
-    var optionSelected = false;
-    for (var i in fields) {
-        if (fields.hasOwnProperty(i)) {
-            optionSelected = false;
-            if (selectedNothing) {
-                if (!fieldSelected) {
-                    fieldSelected = true;
-                    this.setFieldId(i);
-                }
-            } else {
-                if (selectedFieldId == i) {
-                    optionSelected = true;
-                }
-            }
-            goog.dom.appendChild(fieldsSelect, goog.dom.createDom('option', {'value':i,'selected':optionSelected}, i));
-        }
-    }
-    goog.events.listen(fieldsSelect, goog.events.EventType.CHANGE, goog.bind(function(e) {
+robot.ui.DemoUI.prototype.updateFieldSelectElement = function() {
+    var predefinedFieldsGroup = this.createOptGroup(
+        'Predefined',
+        this.createOptionsMap(goog.object.getKeys(robot.PredefinedFields.fields), ''),
+        this.getFieldId(),
+        true
+    );
+    goog.dom.appendChild(this.fieldsSelect_, predefinedFieldsGroup);
+
+    goog.events.listen(this.fieldsSelect_, goog.events.EventType.CHANGE, goog.bind(function(e) {
         var select = e.target;
         this.setFieldId(select.options[select.selectedIndex].value);
         this.reloadField();
@@ -182,54 +169,72 @@ robot.ui.DemoUI.prototype.initFieldSelectElement = function(elementId) {
 
 robot.ui.DemoUI.prototype.updateAlgorithmSelectElement = function() {
     goog.dom.removeChildren(this.algorithmsSelect_);
-    var algorithms = robot.PredefinedAlgorithms.algorithms;
-    var selectedAlgorithmId = this.getAlgorithmId();
-    var selectedNothing = (selectedAlgorithmId == this.SELECT_NOTHING_ID);
-    var algorithmSelected = false;
-    var optionSelected = false;
-    var predefinedAlgorithmsGroup = goog.dom.createDom('optgroup', {'label':'Predefined'});
+
+    var predefinedAlgorithmsGroup = this.createOptGroup(
+        'Predefined',
+        this.createOptionsMap(goog.object.getKeys(robot.PredefinedAlgorithms.algorithms), ''),
+        this.getAlgorithmId(),
+        true
+    );
     goog.dom.appendChild(this.algorithmsSelect_, predefinedAlgorithmsGroup);
-    for (var i in algorithms) {
-        if (algorithms.hasOwnProperty(i)) {
-            optionSelected = false;
-            if (selectedNothing) {
-                if (!algorithmSelected) {
-                    algorithmSelected = true;
-                    this.setAlgorithmId(i);
-                }
-            } else {
-                if (selectedAlgorithmId == i) {
-                    optionSelected = true;
-                }
-            }
-            goog.dom.appendChild(predefinedAlgorithmsGroup, goog.dom.createDom('option', {'value':i,'selected':optionSelected}, i));
-        }
-    }
-    var userAlgorithmsGroup = goog.dom.createDom('optgroup', {'label':'User'});
-    var userAlgorithms = this.getUserAlgorithms();
-    for (var i in userAlgorithms) {
-        if (userAlgorithms.hasOwnProperty(i)) {
-            optionSelected = false;
-            if (selectedNothing) {
-                if (!algorithmSelected) {
-                    algorithmSelected = true;
-                    this.setAlgorithmId(i);
-                }
-            } else {
-                if (selectedAlgorithmId == this.userAlgorithmNameToId(i)) {
-                    optionSelected = true;
-                }
-            }
-            goog.dom.appendChild(userAlgorithmsGroup, goog.dom.createDom('option', {'value':this.userAlgorithmNameToId(i),'selected':optionSelected}, i));
-        }
-    }
+
+    var userAlgorithmsGroup = this.createOptGroup(
+        'User',
+        this.createOptionsMap(goog.object.getKeys(this.getUserAlgorithms()), this.USER_ALGORITHM_PREFIX),
+        this.getAlgorithmId(),
+        false
+    );
     goog.dom.appendChild(this.algorithmsSelect_, userAlgorithmsGroup);
+
     goog.events.listen(this.algorithmsSelect_, goog.events.EventType.CHANGE, goog.bind(function(e) {
         var select = e.target;
         this.setAlgorithmId(select.options[select.selectedIndex].value);
         this.reloadAlgorithm();
         this.updateButtons();
     }, this));
+};
+
+/**
+ * @param {Array.<string>} keys
+ * @param {string} keyPrefix
+ * @return {!Object.<string, string>}
+ */
+robot.ui.DemoUI.prototype.createOptionsMap = function(keys, keyPrefix) {
+    var out = {};
+    for (var i = 0; i < keys.length; i++) {
+        out[keyPrefix+keys[i]] = keys[i];
+    }
+    return out;
+};
+/**
+ *
+ * @param {string} label
+ * @param {!Object.<string, string>} optionsMap
+ * @param selectedId
+ * @param selectFirstIfNothingSelected
+ */
+robot.ui.DemoUI.prototype.createOptGroup = function(label, optionsMap, selectedId, selectFirstIfNothingSelected) {
+    var selectedNothing = (selectedId == this.SELECT_NOTHING_ID);
+    var firstSelected = false;
+    var currentOptionSelected = false;
+    var optGroupEl = goog.dom.createDom('optgroup', {'label':label});
+    for (var i in optionsMap) {
+        if (optionsMap.hasOwnProperty(i)) {
+            currentOptionSelected = false;
+            if (selectedNothing) {
+                if (!firstSelected && selectFirstIfNothingSelected) {
+                    firstSelected = true;
+                    this.setAlgorithmId(i);
+                }
+            } else {
+                if (selectedId == i) {
+                    currentOptionSelected = true;
+                }
+            }
+            goog.dom.appendChild(optGroupEl, goog.dom.createDom('option', {'value':i,'selected':currentOptionSelected}, optionsMap[i]));
+        }
+    }
+    return optGroupEl;
 };
 
 /**
@@ -321,7 +326,7 @@ robot.ui.DemoUI.prototype.run = function (executeOriginal) {
         }
     } catch (e) {
         this.logger.severe(e.toString());
-        throw e;
+        //throw e;
     }
     this.visualizer_.play();
 };

@@ -1,0 +1,3 @@
+[submodule "src/main/resources/closure-externs"]
+	path = src/main/resources/closure-externs
+	url = https://urmuzov@github.com/urmuzov/closure-externs.git

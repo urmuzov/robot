@@ -19,7 +19,7 @@
         <passes>demo</passes>
         <input.closurePackage>com.github.urmuzov.robot</input.closurePackage>
         <input.debug.maven>false</input.debug.maven>
-        <input.debug.javascript>true</input.debug.javascript>
+        <input.debug.javascript>false</input.debug.javascript>
 
         <wro.destination.subDir>target</wro.destination.subDir>
         <wro.destination.dir>${project.build.directory}/${project.build.finalName}</wro.destination.dir>
@@ -181,6 +181,7 @@
                     </sources>
                     <externs>
                         <extern>${input.closure.externs.dir}</extern>
+                        <extern>${project.basedir}/src/main/resources/closure-externs/ace.js</extern>
                     </externs>
                     <warningLevel>VERBOSE_EXTRA</warningLevel>
                     <manageClosureDependencies>true</manageClosureDependencies>
