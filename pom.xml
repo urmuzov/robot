@@ -43,15 +43,20 @@
         <output.closure.js.suffix><![CDATA[]]></output.closure.js.suffix>
         <input.closure.goog.base>goog/base.js</input.closure.goog.base>
         <packaging.type>war</packaging.type>
-        <closureCompilerMavenPlugin.version>1.0.2-SNAPSHOT</closureCompilerMavenPlugin.version>
-        <closurePackageMavenPlugin.version>1.0.2-SNAPSHOT</closurePackageMavenPlugin.version>
-        <closureLibraryMavenWrapper.version>1.0.2-SNAPSHOT</closureLibraryMavenWrapper.version>
+        <closureCompilerMavenPlugin.version>1.0.2</closureCompilerMavenPlugin.version>
+        <closurePackageMavenPlugin.version>1.0.2</closurePackageMavenPlugin.version>
+        <closureLibraryMavenWrapper.version>1.0.2</closureLibraryMavenWrapper.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.github.urmuzov</groupId>
-            <artifactId>closure-library-maven-wrapper</artifactId>
+            <artifactId>closure-library-package</artifactId>
+            <version>${closureLibraryMavenWrapper.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.urmuzov</groupId>
+            <artifactId>closure-bootstrap-package</artifactId>
             <version>${closureLibraryMavenWrapper.version}</version>
         </dependency>
         <dependency>

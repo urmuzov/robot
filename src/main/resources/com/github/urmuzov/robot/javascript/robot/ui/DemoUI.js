@@ -4,8 +4,12 @@ goog.require('goog.dom');
 goog.require('goog.debug.DivConsole');
 goog.require('goog.debug.Logger');
 goog.require('goog.ui.Slider');
+goog.require('goog.ui.TabBar');
+goog.require('goog.ui.decorate');
 goog.require('goog.storage.Storage');
 goog.require('goog.storage.mechanism.HTML5LocalStorage');
+goog.require('bootstrap.Tabs');
+goog.require('bootstrap.Tab');
 goog.require('robot.visual.FieldTableVisualizer');
 goog.require('robot.PredefinedFields');
 goog.require('robot.predefined.fields');
@@ -129,6 +133,12 @@ robot.ui.DemoUI = function() {
     this.updateSlider();
     this.updateButtons();
 
+    /**
+     * @private
+     * @type goog.ui.TabBar
+     */
+    this.tabs_ = (/** @type goog.ui.TabBar */goog.ui.decorate(goog.dom.getElement('tabs')));
+
     new goog.debug.DivConsole(goog.dom.getElement('debug')).setCapturing(true);
 };
 
@@ -205,7 +215,7 @@ robot.ui.DemoUI.prototype.updateAlgorithmSelectElement = function() {
 robot.ui.DemoUI.prototype.createOptionsMap = function(keys, keyPrefix) {
     var out = {};
     for (var i = 0; i < keys.length; i++) {
-        out[keyPrefix+keys[i]] = keys[i];
+        out[keyPrefix + keys[i]] = keys[i];
     }
     return out;
 };
@@ -511,7 +521,7 @@ robot.ui.DemoUI.prototype.isUserAlgorithmId = function (algorithmId) {
  */
 robot.ui.DemoUI.prototype.stringToFunction = function (str) {
     var id = goog.events.getUniqueId("tmpFunction");
-    goog.globalEval("window['"+id+"'] = (" + str + ");");
+    goog.globalEval("window['" + id + "'] = (" + str + ");");
     var func = window[id];
     delete window[id];
     return func;
