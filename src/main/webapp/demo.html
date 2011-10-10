@@ -53,8 +53,12 @@
                             <div class="span3">Program:</div>
                         </div>
                         <div class="row" style="margin-bottom: 10px;">
-                            <div class="span3"><select id="field-select" multiple="multiple" size="7" style="width:100%;"></select></div>
-                            <div class="span3"><select id="program-select" multiple="multiple" size="7" style="width:100%;"></select></div>
+                            <div class="span3">
+                                <select id="field-select" multiple="multiple" size="7" style="width:100%;"></select>
+                            </div>
+                            <div class="span3">
+                                <select id="program-select" multiple="multiple" size="7" style="width:100%;"></select>
+                            </div>
                         </div>
                         <div class="row">
                             <div id="visual" class="span6" style="height: 340px"></div>
@@ -91,9 +95,12 @@
                     <button id="field-save-as" class="btn span2">Save As</button>
                     <button id="field-save" class="btn span2">Save</button>
                     <button id="field-remove" class="btn danger span2">Remove</button>
-                    <button id="field-run-original-button" class="btn primary span2" style="padding-left: 6px; padding-right: 6px;">Show Original
+                    <button id="field-run-original-button" class="btn primary span2" style="padding-left: 6px; padding-right: 6px;">
+                        Show Original
                     </button>
-                    <button id="field-run-editor-button" class="btn primary span2" style="padding-left: 8px; padding-right: 8px;">Render Editor</button>
+                    <button id="field-run-editor-button" class="btn primary span2" style="padding-left: 8px; padding-right: 8px;">
+                        Render Editor
+                    </button>
                 </div>
                 <div class="row">
                     <div class="span10">
@@ -113,5 +120,21 @@
         <p>Alexander Urmuzov, 2011</p>
     </footer>
 </div>
+<script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-21684149-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+    })();
+
+</script>
 </body>
 </html>

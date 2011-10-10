@@ -4,3 +4,6 @@
 [submodule "src/main/resources/bootstrap"]
 	path = src/main/resources/bootstrap
 	url = https://github.com/twitter/bootstrap.git
+[submodule "pages"]
+	path = pages
+	url = https://urmuzov@github.com/urmuzov/robot.git

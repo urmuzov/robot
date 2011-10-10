@@ -1,13 +1,13 @@
 goog.provide('robot.PredefinedFields');
 
 /**
- * @type Object.<string, function():!robot.Field>
+ * @type Object.<string, string>
  */
 robot.PredefinedFields.fields = {};
 
 /**
  * @param {string} id
- * @param {function():!robot.Field} creator
+ * @param {string} creator
  */
 robot.PredefinedFields.addFieldCreator = function(id, creator) {
     robot.PredefinedFields.fields[id] = creator;

@@ -7,7 +7,7 @@ goog.require('goog.functions');
  * @class
  * @constructor
  * @extends goog.events.EventTarget
- * @param {(function():Object.<string, Function>|Object.<string, Function>)} predefinedFunctions
+ * @param {(function():Object.<string, string>|Object.<string, string>)} predefinedFunctions
  * @param {(function():Object.<string, string>|Object.<string, string>)} userFunctions
  * @param {string} selectedId
  * @param {Element} saveAsElement
@@ -27,7 +27,7 @@ robot.ui.FunctionEditor = function(predefinedFunctions, userFunctions, selectedI
     this.USER_FUNCTION_PREFIX = "user:";
     /**
      * @private
-     * @type function():Object.<string, Function>
+     * @type function():Object.<string, string>
      */
     this.getPredefinedFunctions = goog.isFunction(predefinedFunctions) ? predefinedFunctions : goog.bind(goog.functions.identity, window, predefinedFunctions);
     /**
@@ -300,7 +300,7 @@ robot.ui.FunctionEditor.prototype.getFunction = function (getOriginal) {
     if (this.isUserFunctionId(selectedId)) {
         return this.stringToFunction(this.getUserFunctions()[this.userFunctionIdToName(selectedId)]);
     } else {
-        return this.getPredefinedFunctions()[selectedId];
+        return this.stringToFunction(this.getPredefinedFunctions()[selectedId]);
     }
 };
 
