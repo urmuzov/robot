@@ -30,49 +30,61 @@
         <div class="row">
             <div class="span10 offset6">
                 <ul id="tabs" class="tabs">
-                    <li class="tab active"><a href="#">Algorithm Editor</a></li>
+                    <li class="tab active"><a href="#">Program Editor</a></li>
                     <li class="tab"><a href="#">Field Editor</a></li>
                 </ul>
             </div>
         </div>
-        <div class="row" style="margin-bottom: 10px;">
-            <div class="span6">Speed:
-                <div id="speed-slider">
-                    <div class="goog-slider-thumb"></div>
-                </div>
-                <input id="speed-value"/>ms
-            </div>
-            <button id="save-as" class="btn span2">Save As</button>
-            <button id="save" class="btn span2">Save</button>
-            <button id="remove" class="btn danger span2">Remove</button>
-            <button id="run-original-button" class="btn primary span2"
-                    style="padding-left: 12px; padding-right: 12px;">Run Original
-            </button>
-            <button id="run-editor-button" class="btn primary span2">Run Editor</button>
-        </div>
         <div class="row">
             <div class="span6">
-                <div class="row">
-                    <div class="span3">Field:</div>
-                    <div class="span3">Algorithm:</div>
-                </div>
                 <div class="row" style="margin-bottom: 10px;">
-                    <div class="span3"><select id="field-select" class="span3" multiple="multiple" size="7"></select>
+                    <div class="span6">Speed:
+                        <div id="speed-slider">
+                            <div class="goog-slider-thumb"></div>
+                        </div>
+                        <input id="speed-value"/>ms
                     </div>
-                    <div class="span3"><select id="algorithm-select" class="span3" multiple="multiple"
-                                               size="7"></select></div>
                 </div>
                 <div class="row">
-                    <div id="visual" class="span6" style="height: 340px"></div>
+                    <div class="span6">
+                        <div class="row">
+                            <div class="span3">Field:</div>
+                            <div class="span3">Program:</div>
+                        </div>
+                        <div class="row" style="margin-bottom: 10px;">
+                            <div class="span3"><select id="field-select" class="span3" multiple="multiple"
+                                                       size="7"></select>
+                            </div>
+                            <div class="span3"><select id="program-select" class="span3" multiple="multiple"
+                                                       size="7"></select></div>
+                        </div>
+                        <div class="row">
+                            <div id="visual" class="span6" style="height: 340px"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="span10">
+                <div class="row" style="margin-bottom: 10px;">
+                    <button id="save-as" class="btn span2">Save As</button>
+                    <button id="save" class="btn span2">Save</button>
+                    <button id="remove" class="btn danger span2">Remove</button>
+                    <button id="run-original-button" class="btn primary span2"
+                            style="padding-left: 12px; padding-right: 12px;">Run Original
+                    </button>
+                    <button id="run-editor-button" class="btn primary span2">Run Editor</button>
+                </div>
                 <div class="row">
-                    <div id="editor" class="span10" style="position: relative; height: 550px;">
-                        function (field) {
-                        var figure1 = new robot.figures.Figure(new goog.math.Coordinate(0, 0), robot.Direction.DOWN);
-                        figure.setField(field);
-                        }
+                    <div class="span10">
+                        <div class="row">
+                            <div id="editor" class="span10" style="position: relative; height: 550px;">
+                                function (field) {
+                                var figure1 = new robot.figures.Figure(new goog.math.Coordinate(0, 0),
+                                robot.Direction.DOWN);
+                                figure.setField(field);
+                                }
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

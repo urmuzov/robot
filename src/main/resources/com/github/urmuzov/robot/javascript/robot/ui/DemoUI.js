@@ -13,7 +13,7 @@ goog.require('bootstrap.Tab');
 goog.require('robot.visual.FieldTableVisualizer');
 goog.require('robot.PredefinedFields');
 goog.require('robot.predefined.fields');
-goog.require('robot.predefined.algorithms');
+goog.require('robot.predefined.programs');
 
 /**
  * @class
@@ -39,7 +39,7 @@ robot.ui.DemoUI = function() {
      * @private
      * @type Object
      */
-    this.userAlgorithms_ = this.getObjectFromStorage('userAlgorithms', {});
+    this.userPrograms_ = this.getObjectFromStorage('userPrograms', {});
     /**
      * @private
      * @type string
@@ -49,7 +49,7 @@ robot.ui.DemoUI = function() {
      * @private
      * @type string
      */
-    this.algorithmId_ = this.getStringFromStorage('algorithmId', this.SELECT_NOTHING_ID);
+    this.programId_ = this.getStringFromStorage('programId', this.SELECT_NOTHING_ID);
     /**
      * @private
      * @type robot.Field
@@ -59,7 +59,7 @@ robot.ui.DemoUI = function() {
      * @private
      * @type function(!robot.Field)
      */
-    this.algorithm_ = function(field) {
+    this.program_ = function(field) {
     };
     /**
      * @private
@@ -86,8 +86,8 @@ robot.ui.DemoUI = function() {
      * @private
      * @type Element
      */
-    this.algorithmsSelect_ = goog.dom.getElement('algorithm-select');
-    this.updateAlgorithmSelectElement();
+    this.programsSelect_ = goog.dom.getElement('program-select');
+    this.updateProgramSelectElement();
     /**
      * @private
      * @type Element
@@ -129,7 +129,7 @@ robot.ui.DemoUI = function() {
     goog.events.listen(this.removeButton_, goog.events.EventType.CLICK, goog.bind(this.remove, this));
 
     this.reloadField();
-    this.reloadAlgorithm();
+    this.reloadProgram();
     this.updateSlider();
     this.updateButtons();
 
@@ -178,31 +178,31 @@ robot.ui.DemoUI.prototype.updateFieldSelectElement = function() {
     }, this));
 };
 
-robot.ui.DemoUI.prototype.updateAlgorithmSelectElement = function() {
-    goog.dom.removeChildren(this.algorithmsSelect_);
+robot.ui.DemoUI.prototype.updateProgramSelectElement = function() {
+    goog.dom.removeChildren(this.programsSelect_);
 
-    var predefinedAlgorithmsGroup = this.createOptGroup(
+    var predefinedProgramsGroup = this.createOptGroup(
         'Predefined',
-        this.createOptionsMap(goog.object.getKeys(robot.PredefinedAlgorithms.algorithms), ''),
-        this.getAlgorithmId(),
+        this.createOptionsMap(goog.object.getKeys(robot.PredefinedPrograms.programs), ''),
+        this.getProgramId(),
         true
     );
-    goog.dom.appendChild(this.algorithmsSelect_, predefinedAlgorithmsGroup);
+    goog.dom.appendChild(this.programsSelect_, predefinedProgramsGroup);
 
-    var userAlgorithmsGroup = this.createOptGroup(
+    var userProgramsGroup = this.createOptGroup(
         'User',
-        this.createOptionsMap(goog.object.getKeys(this.getUserAlgorithms()), this.USER_ALGORITHM_PREFIX),
-        this.getAlgorithmId(),
+        this.createOptionsMap(goog.object.getKeys(this.getUserPrograms()), this.USER_ALGORITHM_PREFIX),
+        this.getProgramId(),
         false
     );
-    goog.dom.appendChild(this.algorithmsSelect_, userAlgorithmsGroup);
+    goog.dom.appendChild(this.programsSelect_, userProgramsGroup);
 
-    this.setAlgorithmId(this.algorithmsSelect_.options[this.algorithmsSelect_.selectedIndex].value);
+    this.setProgramId(this.programsSelect_.options[this.programsSelect_.selectedIndex].value);
 
-    goog.events.listen(this.algorithmsSelect_, goog.events.EventType.CHANGE, goog.bind(function(e) {
+    goog.events.listen(this.programsSelect_, goog.events.EventType.CHANGE, goog.bind(function(e) {
         var select = e.target;
-        this.setAlgorithmId(select.options[select.selectedIndex].value);
-        this.reloadAlgorithm();
+        this.setProgramId(select.options[select.selectedIndex].value);
+        this.reloadProgram();
         this.updateButtons();
     }, this));
 };
@@ -283,9 +283,9 @@ robot.ui.DemoUI.prototype.updateSlider = function () {
 };
 
 robot.ui.DemoUI.prototype.updateButtons = function () {
-    var userAlgorithm = (this.userAlgorithmIdToName(this.getAlgorithmId()) in this.getUserAlgorithms());
-    this.removeButton_.disabled = !userAlgorithm;
-    this.saveButton_.disabled = !userAlgorithm;
+    var userProgram = (this.userProgramIdToName(this.getProgramId()) in this.getUserPrograms());
+    this.removeButton_.disabled = !userProgram;
+    this.saveButton_.disabled = !userProgram;
 };
 
 robot.ui.DemoUI.prototype.reloadField = function () {
@@ -304,23 +304,23 @@ robot.ui.DemoUI.prototype.reloadField = function () {
     this.visualizer_.render(visualElement);
 };
 
-robot.ui.DemoUI.prototype.reloadAlgorithm = function () {
-    var algId = this.getAlgorithmId();
-    if (this.isUserAlgorithmId(algId)) {
-        this.algorithm_ = (/** @type function (robot.Field) */this.stringToFunction(this.getUserAlgorithms()[this.userAlgorithmIdToName(algId)]));
+robot.ui.DemoUI.prototype.reloadProgram = function () {
+    var algId = this.getProgramId();
+    if (this.isUserProgramId(algId)) {
+        this.program_ = (/** @type function (robot.Field) */this.stringToFunction(this.getUserPrograms()[this.userProgramIdToName(algId)]));
     } else {
-        this.algorithm_ = robot.PredefinedAlgorithms.algorithms[algId];
+        this.program_ = robot.PredefinedPrograms.programs[algId];
     }
-    if (this.algorithm_)
-        this.setEditorValue(this.algorithm_.toString());
+    if (this.program_)
+        this.setEditorValue(this.program_.toString());
 };
 
 /**
  * @param {boolean} executeOriginal
  */
 robot.ui.DemoUI.prototype.run = function (executeOriginal) {
-    if (goog.isNull(this.algorithm_)) {
-        alert('Algorithm is not selected');
+    if (goog.isNull(this.program_)) {
+        alert('Program is not selected');
         return;
     }
     if (goog.isNull(this.field_)) {
@@ -333,7 +333,7 @@ robot.ui.DemoUI.prototype.run = function (executeOriginal) {
     this.reloadField();
     try {
         if (executeOriginal) {
-            this.algorithm_(this.field_);
+            this.program_(this.field_);
         } else {
             var alg = this.stringToFunction(this.getEditorValue());
             alg(this.field_);
@@ -345,35 +345,35 @@ robot.ui.DemoUI.prototype.run = function (executeOriginal) {
     this.visualizer_.play();
 };
 
-robot.ui.DemoUI.prototype.saveUserAlgorithm = function (name, algorithmText) {
-    var userAlgos = this.getUserAlgorithms();
-    userAlgos[name] = algorithmText;
-    this.setUserAlgorithms(userAlgos);
+robot.ui.DemoUI.prototype.saveUserProgram = function (name, programText) {
+    var userAlgos = this.getUserPrograms();
+    userAlgos[name] = programText;
+    this.setUserPrograms(userAlgos);
 };
 
 robot.ui.DemoUI.prototype.saveAs = function () {
-    var name = window.prompt('Enter algorithm name:');
+    var name = window.prompt('Enter program name:');
     if (name) {
-        var algorithmText = this.getEditorValue();
-        this.saveUserAlgorithm(name, algorithmText);
-        this.setAlgorithmId(this.userAlgorithmNameToId(name));
-        this.updateAlgorithmSelectElement();
+        var programText = this.getEditorValue();
+        this.saveUserProgram(name, programText);
+        this.setProgramId(this.userProgramNameToId(name));
+        this.updateProgramSelectElement();
     }
 };
 
 robot.ui.DemoUI.prototype.save = function () {
-    var name = this.userAlgorithmIdToName(this.getAlgorithmId());
-    var algorithmText = this.getEditorValue();
-    this.saveUserAlgorithm(name, algorithmText);
+    var name = this.userProgramIdToName(this.getProgramId());
+    var programText = this.getEditorValue();
+    this.saveUserProgram(name, programText);
 };
 
 robot.ui.DemoUI.prototype.remove = function () {
-    var userAlgos = this.getUserAlgorithms();
-    delete userAlgos[this.userAlgorithmIdToName(this.getAlgorithmId())];
-    this.setUserAlgorithms(userAlgos);
-    this.setAlgorithmId(this.SELECT_NOTHING_ID);
-    this.updateAlgorithmSelectElement();
-    this.reloadAlgorithm();
+    var userAlgos = this.getUserPrograms();
+    delete userAlgos[this.userProgramIdToName(this.getProgramId())];
+    this.setUserPrograms(userAlgos);
+    this.setProgramId(this.SELECT_NOTHING_ID);
+    this.updateProgramSelectElement();
+    this.reloadProgram();
     this.updateButtons();
 };
 
@@ -448,31 +448,31 @@ robot.ui.DemoUI.prototype.setFieldId = function (fieldId) {
 /**
  * @return {string}
  */
-robot.ui.DemoUI.prototype.getAlgorithmId = function () {
-    return this.algorithmId_;
+robot.ui.DemoUI.prototype.getProgramId = function () {
+    return this.programId_;
 };
 
 /**
- * @param {string} algorithmId
+ * @param {string} programId
  */
-robot.ui.DemoUI.prototype.setAlgorithmId = function (algorithmId) {
-    this.algorithmId_ = algorithmId;
-    this.setToStorage('algorithmId', this.algorithmId_);
+robot.ui.DemoUI.prototype.setProgramId = function (programId) {
+    this.programId_ = programId;
+    this.setToStorage('programId', this.programId_);
 };
 
 /**
  * @return {Object}
  */
-robot.ui.DemoUI.prototype.getUserAlgorithms = function () {
-    return this.userAlgorithms_;
+robot.ui.DemoUI.prototype.getUserPrograms = function () {
+    return this.userPrograms_;
 };
 
 /**
- * @param {Object} userAlgorithms
+ * @param {Object} userPrograms
  */
-robot.ui.DemoUI.prototype.setUserAlgorithms = function (userAlgorithms) {
-    this.userAlgorithms_ = userAlgorithms;
-    this.setToStorage('userAlgorithms', this.userAlgorithms_);
+robot.ui.DemoUI.prototype.setUserPrograms = function (userPrograms) {
+    this.userPrograms_ = userPrograms;
+    this.setToStorage('userPrograms', this.userPrograms_);
 };
 
 
@@ -491,28 +491,28 @@ robot.ui.DemoUI.prototype.setEditorValue = function (editorValue) {
 };
 
 /**
- * @param {string} userAlgorithmId
+ * @param {string} userProgramId
  * @return {string}
  */
-robot.ui.DemoUI.prototype.userAlgorithmIdToName = function (userAlgorithmId) {
-    return goog.string.remove(userAlgorithmId, this.USER_ALGORITHM_PREFIX);
+robot.ui.DemoUI.prototype.userProgramIdToName = function (userProgramId) {
+    return goog.string.remove(userProgramId, this.USER_ALGORITHM_PREFIX);
 };
 
 /**
- * @param {string} userAlgorithmName
+ * @param {string} userProgramName
  * @return {string}
  */
-robot.ui.DemoUI.prototype.userAlgorithmNameToId = function (userAlgorithmName) {
-    return this.USER_ALGORITHM_PREFIX + userAlgorithmName;
+robot.ui.DemoUI.prototype.userProgramNameToId = function (userProgramName) {
+    return this.USER_ALGORITHM_PREFIX + userProgramName;
 };
 
 
 /**
- * @param {string} algorithmId
+ * @param {string} programId
  * @return {boolean}
  */
-robot.ui.DemoUI.prototype.isUserAlgorithmId = function (algorithmId) {
-    return goog.string.startsWith(algorithmId, this.USER_ALGORITHM_PREFIX);
+robot.ui.DemoUI.prototype.isUserProgramId = function (programId) {
+    return goog.string.startsWith(programId, this.USER_ALGORITHM_PREFIX);
 };
 
 /**

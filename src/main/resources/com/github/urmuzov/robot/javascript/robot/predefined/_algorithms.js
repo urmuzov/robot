@@ -1,6 +1,6 @@
-goog.provide('robot.predefined.algorithms');
+goog.provide('robot.predefined.programs');
 
-goog.require('robot.PredefinedAlgorithms');
+goog.require('robot.PredefinedPrograms');
 goog.require('robot.Field');
 goog.require('robot.figures.WallE');
 goog.require('goog.math');
@@ -8,7 +8,7 @@ goog.require('goog.math');
 /**
  * @param {!robot.Field} field
  */
-robot.predefined.algorithms.demo1 = function(field) {
+robot.predefined.programs.demo1 = function(field) {
     var figure1 = new robot.figures.Figure(new goog.math.Coordinate(4, 1), robot.Direction.DOWN);
     var figure2 = new robot.figures.Figure(new goog.math.Coordinate(5, 2), robot.Direction.DOWN);
     figure1.setField(field);
@@ -57,12 +57,12 @@ robot.predefined.algorithms.demo1 = function(field) {
     figure1.setField(null);
     figure2.setField(null);
 };
-robot.PredefinedAlgorithms.addAlgorithmCreator('demo1', robot.predefined.algorithms.demo1);
+robot.PredefinedPrograms.addProgramCreator('demo1', robot.predefined.programs.demo1);
 
 /**
  * @param {!robot.Field} field
  */
-robot.predefined.algorithms.firstSimple = function(field) {
+robot.predefined.programs.firstSimple = function(field) {
     var wallE = new robot.figures.WallE(new goog.math.Coordinate(0, 0), robot.Direction.DOWN);
     wallE.setField(field);
     wallE.move();
@@ -83,12 +83,12 @@ robot.predefined.algorithms.firstSimple = function(field) {
     wallE.turnRight();
     wallE.move();
 };
-robot.PredefinedAlgorithms.addAlgorithmCreator('first-simple', robot.predefined.algorithms.firstSimple);
+robot.PredefinedPrograms.addProgramCreator('first-simple', robot.predefined.programs.firstSimple);
 
 /**
  * @param {!robot.Field} field
  */
-robot.predefined.algorithms.firstCrash = function(field) {
+robot.predefined.programs.firstCrash = function(field) {
     var wallE = new robot.figures.WallE(new goog.math.Coordinate(0, 0), robot.Direction.DOWN);
     wallE.setField(field);
     wallE.move();
@@ -104,4 +104,4 @@ robot.predefined.algorithms.firstCrash = function(field) {
     wallE.move();
     wallE.move(); // эта строка не выполнится
 };
-robot.PredefinedAlgorithms.addAlgorithmCreator('first-crash', robot.predefined.algorithms.firstCrash);
+robot.PredefinedPrograms.addProgramCreator('first-crash', robot.predefined.programs.firstCrash);

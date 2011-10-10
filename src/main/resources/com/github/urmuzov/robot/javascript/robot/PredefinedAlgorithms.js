@@ -1,14 +1,14 @@
-goog.provide('robot.PredefinedAlgorithms');
+goog.provide('robot.PredefinedPrograms');
 
 /**
  * @type Object.<string, function(!robot.Field)>
  */
-robot.PredefinedAlgorithms.algorithms = {};
+robot.PredefinedPrograms.programs = {};
 
 /**
  * @param {string} id
  * @param {function(!robot.Field)} creator
  */
-robot.PredefinedAlgorithms.addAlgorithmCreator = function(id, creator) {
-    robot.PredefinedAlgorithms.algorithms[id] = creator;
+robot.PredefinedPrograms.addProgramCreator = function(id, creator) {
+    robot.PredefinedPrograms.programs[id] = creator;
 };
