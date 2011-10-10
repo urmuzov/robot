@@ -87,6 +87,7 @@ robot.ui.DemoUI = function() {
             var programText = functionEditor.getEditorValue();
             var name = e.functionName;
             this.saveUserProgram(name, programText);
+            this.showSuccessMessage("Program '"+name+"' saved!");
         }, false, this
     );
     this.programEditor_.addEventListener(robot.ui.FunctionEditor.EventType.FUNCTION_REMOVE,
@@ -96,17 +97,17 @@ robot.ui.DemoUI = function() {
             var userAlgos = this.getUserPrograms();
             delete userAlgos[name];
             this.setUserPrograms(userAlgos);
+            this.showSuccessMessage("Program '"+name+"' removed!");
         }, false, this
     );
     goog.events.listen(this.programEditor_, [robot.ui.FunctionEditor.EventType.RUN_EDITOR_CLICK, robot.ui.FunctionEditor.EventType.RUN_ORIGINAL_CLICK],
         function(e) {
-            var functionEditor = (/** @type robot.ui.FunctionEditor */ e.target);
-            this.reloadField(true);
             try {
+                var functionEditor = (/** @type robot.ui.FunctionEditor */ e.target);
+                this.reloadField(true);
                 functionEditor.getFunction(e.type == robot.ui.FunctionEditor.EventType.RUN_ORIGINAL_CLICK)(this.field_);
             } catch (ex) {
-                this.logger.severe(ex.toString());
-                //throw e;
+                this.logger.severe("Program execution error", ex);
             }
             this.visualizer_.play();
         }, false, this
@@ -140,6 +141,7 @@ robot.ui.DemoUI = function() {
             var fieldCode = functionEditor.getEditorValue();
             var name = e.functionName;
             this.saveUserField(name, fieldCode);
+            this.showSuccessMessage("Field '"+name+"' saved!");
         }, false, this
     );
     this.fieldEditor_.addEventListener(robot.ui.FunctionEditor.EventType.FUNCTION_REMOVE,
@@ -149,6 +151,7 @@ robot.ui.DemoUI = function() {
             var userFields = this.getUserFields();
             delete userFields[name];
             this.setUserFields(userFields);
+            this.showSuccessMessage("Field '"+name+"' removed!");
         }, false, this
     );
     goog.events.listen(this.fieldEditor_, [robot.ui.FunctionEditor.EventType.RUN_EDITOR_CLICK, robot.ui.FunctionEditor.EventType.RUN_ORIGINAL_CLICK],
@@ -173,7 +176,18 @@ robot.ui.DemoUI = function() {
         goog.style.showElement(tabPanelElement, e.type == goog.ui.Component.EventType.SELECT);
     });
 
+    //Hide messages on any action
+    goog.events.listen(this.tabs_, goog.ui.Component.EventType.ACTION, this.hideAllMessages, false, this);
+
     new goog.debug.DivConsole(goog.dom.getElement('debug')).setCapturing(true);
+    goog.debug.LogManager.getRoot().addHandler(goog.bind(/** @param {goog.debug.LogRecord} logRecord */ function(logRecord) {
+        var level = logRecord.getLevel();
+        if (level.value >= goog.debug.Logger.Level.SEVERE.value) {
+            var exception = logRecord.getException();
+            var text = logRecord.getMessage() + (exception && exception.message ? ' (' + exception.message + ')' : '');
+            this.showErrorMessage(text.substring(0, 50));
+        }
+    }, this));
 };
 
 /**
@@ -227,8 +241,8 @@ robot.ui.DemoUI.prototype.updateSlider = function () {
 robot.ui.DemoUI.prototype.reloadField = function (runOriginal) {
     goog.dispose(this.visualizer_);
     goog.dispose(this.field_);
-    var fieldCreator = this.fieldEditor_.getFunction(runOriginal);
     try {
+        var fieldCreator = this.fieldEditor_.getFunction(runOriginal);
         this.field_ = fieldCreator();
         this.visualizer_ = new robot.visual.FieldTableVisualizer(this.field_);
         this.visualizer_.setAnimationTime(this.getAnimationTime());
@@ -337,3 +351,43 @@ robot.ui.DemoUI.prototype.setUserFields = function (userFields) {
     this.userFields_ = userFields;
     this.setToStorage('userFields', this.userFields_);
 };
+
+/**
+ * @param {string} message
+ */
+robot.ui.DemoUI.prototype.showErrorMessage = function (message) {
+    this.hideAllMessages();
+    var alertEl = goog.dom.getElement('error-alert');
+    var messageEl = goog.dom.getElement('error-message');
+    messageEl.innerHTML = message;
+    goog.style.showElement(alertEl, true);
+};
+
+robot.ui.DemoUI.prototype.hideErrorMessage = function () {
+    var alertEl = goog.dom.getElement('error-alert');
+    goog.style.showElement(alertEl, false);
+};
+
+/**
+ * @param {string} message
+ */
+robot.ui.DemoUI.prototype.showSuccessMessage = function (message) {
+    this.hideAllMessages();
+    var alertEl = goog.dom.getElement('success-alert');
+    var messageEl = goog.dom.getElement('success-message');
+    messageEl.innerHTML = message;
+    goog.style.showElement(alertEl, true);
+};
+
+robot.ui.DemoUI.prototype.hideSuccessMessage = function () {
+    var alertEl = goog.dom.getElement('success-alert');
+    goog.style.showElement(alertEl, false);
+};
+
+
+robot.ui.DemoUI.prototype.hideAllMessages = function () {
+    this.hideErrorMessage();
+    this.hideSuccessMessage();
+};
+
+

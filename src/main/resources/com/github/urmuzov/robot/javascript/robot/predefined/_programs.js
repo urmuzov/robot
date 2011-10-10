@@ -3,6 +3,7 @@ goog.provide('robot.predefined.programs');
 goog.require('robot.PredefinedPrograms');
 goog.require('robot.Field');
 goog.require('robot.figures.WallE');
+goog.require('robot.figures.SummonerFigure');
 goog.require('goog.math');
 
 /**
@@ -102,3 +103,29 @@ robot.predefined.programs.firstCrash = "function(field) {\n\
     wallE.move(); // эта строка не выполнится\n\
 }";
 robot.PredefinedPrograms.addProgramCreator('first-crash', robot.predefined.programs.firstCrash);
+
+robot.predefined.programs.summon = "function (field) {\n\
+    var s = new robot.figures.SummonerFigure(new goog.math.Coordinate(0, 0), robot.Direction.DOWN);\n\
+    s.setField(field);\n\
+    s.summon(1);\n\
+    s.move();\n\
+    s.summon(2);\n\
+    s.move();\n\
+    s.summon(3);\n\
+    s.move();\n\
+    s.summon(4);\n\
+    s.move();\n\
+    s.summon(5);\n\
+    s.move();\n\
+    s.turnLeft();\n\
+    s.turnLeft();\n\
+    s.move();\n\
+    s.move();\n\
+    s.dismiss(4);\n\
+    s.move();\n\
+    s.move();\n\
+    s.dismiss(5); //Not enough stack count\n\
+    s.turnRight();\n\
+    s.move();\n\
+}";
+robot.PredefinedPrograms.addProgramCreator('summon', robot.predefined.programs.summon);

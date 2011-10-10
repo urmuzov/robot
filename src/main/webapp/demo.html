@@ -29,7 +29,17 @@
 <div class="container">
     <div class="content">
         <div class="row">
-            <div class="span10 offset6">
+            <div class="span6" style="height: 20px;">
+                <div id="error-alert" class="alert-message error" style="display:none;">
+                    <a class="close" href="javascript:;" onclick="this.parentNode.style.display='none';">×</a>
+                    <p><span id="error-message"></span></p>
+                </div>
+                <div id="success-alert" class="alert-message success" style="display:none;">
+                    <a class="close" href="javascript:;" onclick="this.parentNode.style.display='none';">×</a>
+                    <p><span id="success-message"></span></p>
+                </div>
+            </div>
+            <div class="span10 offset">
                 <ul id="tabs" class="tabs">
                     <li class="tab active" data-tab-panel-id="program-tab"><a href="#">Program Editor</a></li>
                     <li class="tab" data-tab-panel-id="field-tab"><a href="#">Field Editor</a></li>

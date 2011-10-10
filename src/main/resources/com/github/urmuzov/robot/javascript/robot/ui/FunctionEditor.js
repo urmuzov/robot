@@ -211,6 +211,7 @@ robot.ui.FunctionEditor.prototype.saveAs = function () {
         this.dispatchEvent(new robot.ui.FunctionEditor.SaveEvent(name, this.userFunctionNameToId(name)));
         this.updateSelectElement();
         this.setSelectedId(this.userFunctionNameToId(name));
+        this.updateButtons();
     }
 };
 
