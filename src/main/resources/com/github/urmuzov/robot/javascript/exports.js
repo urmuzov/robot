@@ -2,6 +2,7 @@ goog.require('robot.ExportManager');
 goog.require('goog.math.Coordinate');
 goog.require('robot.Direction');
 goog.require('robot.Rotation');
+goog.require('robot.Field');
 goog.require('robot.figures.Figure');
 goog.require('robot.figures.WallE');
 goog.require('robot.figures.StackableFigure');
@@ -21,6 +22,12 @@ em.exportEnum('robot.Rotation', robot.Rotation)
     .exportProperties({
         'CLOCKWISE': robot.Rotation.CLOCKWISE,
         'COUNTERCLOCKWISE': robot.Rotation.COUNTERCLOCKWISE
+    });
+em.exportConstructor('robot.Field', robot.Field)
+    .exportPrototypeProperties({
+        'putWallOnRight': robot.Field.prototype.putWallOnRight,
+        'putWallOnBottom': robot.Field.prototype.putWallOnBottom,
+        'putWall': robot.Field.prototype.putWall
     });
 em.exportConstructor('robot.figures.Figure', robot.figures.Figure)
     .exportPrototypeProperties({

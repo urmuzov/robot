@@ -17,6 +17,7 @@
             <a class="brand" href="#">Robot Demo</a>
             <ul class="nav">
                 <li><a href="javascript:;" id="show-exports">Exports</a></li>
+                <li><a href="javascript:;" id="show-debug">Debug</a></li>
             </ul>
             <ul class="nav secondary-nav">
                 <li><a href="https://github.com/urmuzov/robot">Fork on GitHub</a></li>
@@ -30,8 +31,8 @@
         <div class="row">
             <div class="span10 offset6">
                 <ul id="tabs" class="tabs">
-                    <li class="tab active"><a href="#">Program Editor</a></li>
-                    <li class="tab"><a href="#">Field Editor</a></li>
+                    <li class="tab active" data-tab-panel-id="program-tab"><a href="#">Program Editor</a></li>
+                    <li class="tab" data-tab-panel-id="field-tab"><a href="#">Field Editor</a></li>
                 </ul>
             </div>
         </div>
@@ -52,11 +53,8 @@
                             <div class="span3">Program:</div>
                         </div>
                         <div class="row" style="margin-bottom: 10px;">
-                            <div class="span3"><select id="field-select" class="span3" multiple="multiple"
-                                                       size="7"></select>
-                            </div>
-                            <div class="span3"><select id="program-select" class="span3" multiple="multiple"
-                                                       size="7"></select></div>
+                            <div class="span3"><select id="field-select" multiple="multiple" size="7" style="width:100%;"></select></div>
+                            <div class="span3"><select id="program-select" multiple="multiple" size="7" style="width:100%;"></select></div>
                         </div>
                         <div class="row">
                             <div id="visual" class="span6" style="height: 340px"></div>
@@ -64,20 +62,20 @@
                     </div>
                 </div>
             </div>
-            <div class="span10">
+            <div id="program-tab" class="span10">
                 <div class="row" style="margin-bottom: 10px;">
-                    <button id="save-as" class="btn span2">Save As</button>
-                    <button id="save" class="btn span2">Save</button>
-                    <button id="remove" class="btn danger span2">Remove</button>
-                    <button id="run-original-button" class="btn primary span2"
+                    <button id="program-save-as" class="btn span2">Save As</button>
+                    <button id="program-save" class="btn span2">Save</button>
+                    <button id="program-remove" class="btn danger span2">Remove</button>
+                    <button id="program-run-original-button" class="btn primary span2"
                             style="padding-left: 12px; padding-right: 12px;">Run Original
                     </button>
-                    <button id="run-editor-button" class="btn primary span2">Run Editor</button>
+                    <button id="program-run-editor-button" class="btn primary span2">Run Editor</button>
                 </div>
                 <div class="row">
                     <div class="span10">
                         <div class="row">
-                            <div id="editor" class="span10" style="position: relative; height: 550px;">
+                            <div id="program-editor" class="span10" style="position: relative; height: 550px;">
                                 function (field) {
                                 var figure1 = new robot.figures.Figure(new goog.math.Coordinate(0, 0),
                                 robot.Direction.DOWN);
@@ -88,11 +86,27 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <h1>Debug</h1>
-
-        <div class="row">
-            <div id="debug" class="span16" style="height: 300px; font-size: 70%; overflow-y: scroll;"></div>
+            <div id="field-tab" class="span10" style="visibility: hidden;">
+                <div class="row" style="margin-bottom: 10px;">
+                    <button id="field-save-as" class="btn span2">Save As</button>
+                    <button id="field-save" class="btn span2">Save</button>
+                    <button id="field-remove" class="btn danger span2">Remove</button>
+                    <button id="field-run-original-button" class="btn primary span2" style="padding-left: 6px; padding-right: 6px;">Show Original
+                    </button>
+                    <button id="field-run-editor-button" class="btn primary span2" style="padding-left: 8px; padding-right: 8px;">Render Editor</button>
+                </div>
+                <div class="row">
+                    <div class="span10">
+                        <div class="row">
+                            <div id="field-editor" class="span10" style="position: relative; height: 550px;">
+                                function () {
+                                return null;
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <footer>
